@@ -1,4 +1,4 @@
-namespace FatCat.Projection
+namespace FatCat
 {
 	public class JustToGetTheWaterRunning
 	{

@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace FatCat.Projection.Tests
+namespace FatCat.Tests
 {
 	public class WaterRunning
 	{

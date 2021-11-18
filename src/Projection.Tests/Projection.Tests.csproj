@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>FatCat.Projection.Tests</RootNamespace>
+    <RootNamespace>FatCat.Tests</RootNamespace>
     <AssemblyName>FatCat.Projection.Tests</AssemblyName>
   </PropertyGroup>
 

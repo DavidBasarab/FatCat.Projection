@@ -29,6 +29,9 @@ namespace FatCat
 
 	public static class Projection
 	{
-
+		public static TDestination? ProjectTo<TDestination>(object source) where TDestination : class
+		{
+			return null;
+		}
 	}
 }

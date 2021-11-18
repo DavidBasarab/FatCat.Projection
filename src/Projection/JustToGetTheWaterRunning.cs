@@ -13,9 +13,15 @@ namespace FatCat.Projection
 		 *  OtherClass projection = Do.Projection<OtherClass>(someObject);
 		 *  OtherClass projection = A.Projection<OtherClass>(someObject);
 		 *
+
+		 *
 		 * OtherClass projection = someObject.Projection<OtherClass>();
 		 *
-		 * * var projection = someObject.ProjectTo<OtherClass>();
+		 * Current Winners as of now
+		 *
+		 * var projection = someObject.ProjectTo<OtherClass>();
+		 *
+		 *  OtherClass projection = Projection.ProjectTo<OtherClass>(someObject);
 		 *
 		 *
 		 */

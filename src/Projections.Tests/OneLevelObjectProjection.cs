@@ -18,7 +18,10 @@ namespace FatCat.Projections.Tests
 				.Should()
 				.BeFalse();
 
-			result.Should().BeEquivalentTo(source);
+			result.SubObject.Should().BeEquivalentTo(source.SubObject);
+
+			result.DifferentSubObject.Number.Should().Be(source.DifferentSubObject.Number);
+			result.DifferentSubObject.UpdatedDate.Should().Be(source.DifferentSubObject.UpdatedDate);
 		}
 	}
 }

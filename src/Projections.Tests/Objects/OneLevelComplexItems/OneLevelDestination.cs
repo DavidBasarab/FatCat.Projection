@@ -6,6 +6,8 @@ namespace FatCat.Projections.Tests.Objects.OneLevelComplexItems
 	{
 		public SubObject SubObject { get; set; }
 
+		public DifferentSubObject DifferentSubObject { get; set; }
+
 		public TimeSpan Time { get; set; }
 
 		public int TimesCreated { get; set; }

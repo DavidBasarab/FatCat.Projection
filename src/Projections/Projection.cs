@@ -7,9 +7,15 @@ namespace FatCat.Projections
 	{
 		public static TDestination ProjectTo<TDestination>(object source) where TDestination : class
 		{
-			var instance = Activator.CreateInstance<TDestination>();
-
 			var destinationType = typeof(TDestination);
+
+			return (ProjectTo(destinationType, source) as TDestination)!;
+		}
+
+		private static object ProjectTo(Type destinationType, object source)
+		{
+			var instance = Activator.CreateInstance(destinationType);
+
 			var sourceType = source.GetType();
 
 			var sourceProperties = sourceType.GetProperties();
@@ -19,10 +25,12 @@ namespace FatCat.Projections
 			{
 				var destinationProperty = destinationProperties.FirstOrDefault(i => i.Name == sourceProperty.Name);
 
+				if (destinationProperty == null) continue;
+
 				destinationProperty?.SetValue(instance, sourceProperty.GetValue(source));
 			}
 
-			return instance;
+			return instance!;
 		}
 	}
 }

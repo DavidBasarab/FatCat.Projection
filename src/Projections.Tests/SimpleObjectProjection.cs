@@ -3,7 +3,7 @@ using FatCat.Tests.Objects;
 using FluentAssertions;
 using Xunit;
 
-namespace FatCat.Tests
+namespace FatCat.Projections.Tests
 {
 	public class SimpleObjectProjection
 	{

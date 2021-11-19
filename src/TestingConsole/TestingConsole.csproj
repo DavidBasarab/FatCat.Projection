@@ -9,4 +9,9 @@
         <AssemblyName>FatCat.Projections.TestingConsole</AssemblyName>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj" />
+      <ProjectReference Include="..\Projections\Projections.csproj" />
+    </ItemGroup>
+
 </Project>

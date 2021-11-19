@@ -7,7 +7,7 @@ namespace FatCat.Projections.Tests
 {
 	public class OneLevelObjectProjection
 	{
-		[Fact(Skip = "Going to refactor")]
+		[Fact]
 		public void CanProjectOnSubObject()
 		{
 			var source = Faker.Create<OneLevelSource>();

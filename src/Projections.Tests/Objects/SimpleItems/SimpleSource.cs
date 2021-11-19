@@ -13,5 +13,9 @@ namespace FatCat.Projections.Tests.Objects.SimpleItems
 		public bool SomeSwitch { get; set; }
 
 		public TestingEnum SomeEnum { get; set; }
+
+		public double ADouble { get; set; }
+
+		public ushort AShort { get; set; }
 	}
 }

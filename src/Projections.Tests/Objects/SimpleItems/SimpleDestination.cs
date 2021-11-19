@@ -4,6 +4,10 @@ namespace FatCat.Projections.Tests.Objects.SimpleItems
 {
 	public class SimpleDestination
 	{
+		public double ADouble { get; set; }
+
+		public ushort AShort { get; set; }
+
 		public string? FirstName { get; set; }
 
 		public int Number { get; set; }

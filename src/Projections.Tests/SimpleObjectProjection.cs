@@ -21,6 +21,20 @@ namespace FatCat.Projections.Tests
 		}
 
 		[Fact]
+		public void CanProjectUntilSelf()
+		{
+			var source = Faker.Create<SimpleSource>();
+
+			var result = Projection.ProjectTo<SimpleSource>(source);
+
+			ReferenceEquals(source, result)
+				.Should()
+				.BeFalse();
+
+			result.Should().BeEquivalentTo(source);
+		}
+
+		[Fact]
 		public void ExtraPropertiesAreNotPopulated()
 		{
 			var source = Faker.Create<SimpleSource>();

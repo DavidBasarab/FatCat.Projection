@@ -5,8 +5,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <OutputType>Exe</OutputType>
-        <RootNamespace>FatCat.Projection.TestingConsole</RootNamespace>
-        <AssemblyName>FatCat.Projection.TestingConsole</AssemblyName>
+        <RootNamespace>FatCat.Projections.TestingConsole</RootNamespace>
+        <AssemblyName>FatCat.Projections.TestingConsole</AssemblyName>
     </PropertyGroup>
 
 </Project>

@@ -4,8 +4,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>FatCat</RootNamespace>
-        <AssemblyName>FatCat.Projection</AssemblyName>
+        <RootNamespace>FatCat.Projections</RootNamespace>
+        <AssemblyName>FatCat.Projections</AssemblyName>
     </PropertyGroup>
 
 </Project>

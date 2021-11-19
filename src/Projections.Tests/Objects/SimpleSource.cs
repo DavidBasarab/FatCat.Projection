@@ -1,4 +1,4 @@
-namespace FatCat.Tests.Objects
+namespace FatCat.Projections.Tests.Objects
 {
 	public class SimpleSource
 	{

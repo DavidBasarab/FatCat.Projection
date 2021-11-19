@@ -5,7 +5,7 @@ namespace FatCat.Projections
 {
 	public static class Projection
 	{
-		public static TDestination? ProjectTo<TDestination>(object source) where TDestination : class
+		public static TDestination ProjectTo<TDestination>(object source) where TDestination : class
 		{
 			var instance = Activator.CreateInstance<TDestination>();
 
@@ -19,7 +19,7 @@ namespace FatCat.Projections
 			{
 				var destinationProperty = destinationProperties.FirstOrDefault(i => i.Name == sourceProperty.Name);
 
-				destinationProperty.SetValue(instance, sourceProperty.GetValue(source));
+				destinationProperty?.SetValue(instance, sourceProperty.GetValue(source));
 			}
 
 			return instance;

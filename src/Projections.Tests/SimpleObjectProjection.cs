@@ -1,5 +1,5 @@
 using FatCat.Fakes;
-using FatCat.Projections.Tests.Objects;
+using FatCat.Projections.Tests.Objects.SimpleItems;
 using FluentAssertions;
 using Xunit;
 
@@ -17,6 +17,18 @@ namespace FatCat.Projections.Tests
 			result.Should().BeOfType<SimpleDestination>();
 
 			result.Should().BeEquivalentTo(source);
+		}
+
+		[Fact]
+		public void ExtraPropertiesAreNotPopulated()
+		{
+			var source = Faker.Create<SimpleSource>();
+
+			var result = Projection.ProjectTo<SimpleDestinationMoreProperties>(source);
+
+			result.LastName.Should().BeNullOrEmpty();
+			result.FirstName.Should().Be(source.FirstName);
+			result.Number.Should().Be(source.Number);
 		}
 
 		[Fact]

@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>FatCat.Projection.TestingConsole</RootNamespace>
-    <AssemblyName>FatCat.Projection.TestingConsole</AssemblyName>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>FatCat.Projection.TestingConsole</RootNamespace>
+        <AssemblyName>FatCat.Projection.TestingConsole</AssemblyName>
+    </PropertyGroup>
 
 </Project>

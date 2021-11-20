@@ -10,6 +10,6 @@ namespace FatCat.Projections.Tests.Objects.OneLevelComplexItems
 
 		public TimeSpan Time { get; set; }
 
-		public int TimesCreated { get; set; }
+		public int TimesCreated => 2;
 	}
 }

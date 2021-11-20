@@ -12,7 +12,7 @@ namespace FatCat.Projections
 			return (ProjectTo(destinationType, source) as TDestination)!;
 		}
 
-		private static object ProjectTo(Type destinationType, object source)
+		private static object? ProjectTo(Type destinationType, object source)
 		{
 			var instance = Activator.CreateInstance(destinationType);
 
@@ -25,19 +25,15 @@ namespace FatCat.Projections
 			{
 				var destinationProperty = destinationProperties.FirstOrDefault(i => i.Name == sourceProperty.Name);
 
-				if (destinationProperty == null) continue;
+				if (destinationProperty == null || !destinationProperty.CanWrite) continue;
 
 				Console.WriteLine($"SourceProperty {sourceProperty.Name} | DestinationProperty {destinationProperty.Name}");
 
 				var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
 
-				if (ValidSubObject(typeCode, destinationProperty.PropertyType))
-				{
-					var propertyValue = ProjectTo(destinationProperty.PropertyType, sourceProperty.GetValue(source)!);
+				var propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? ProjectTo(destinationProperty.PropertyType, sourceProperty.GetValue(source)!) : sourceProperty?.GetValue(source);
 
-					destinationProperty.SetValue(instance, propertyValue);
-				}
-				else destinationProperty?.SetValue(instance, sourceProperty.GetValue(source));
+				destinationProperty.SetValue(instance, propertyValue);
 			}
 
 			return instance!;

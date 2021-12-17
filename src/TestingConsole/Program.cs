@@ -1,22 +1,20 @@
-using System;
 using FatCat.Fakes;
 using FatCat.Projections.Tests.Objects.OneLevelComplexItems;
 
-namespace FatCat.Projections.TestingConsole
+namespace FatCat.Projections.TestingConsole;
+
+public class Program
 {
-	public class Program
+	public static void Main(params string[] args)
 	{
-		public static void Main(params string[] args)
+		Console.WriteLine("Projection Test Console");
+
+		try
 		{
-			Console.WriteLine("Projection Test Console");
+			var source = Faker.Create<OneLevelSource>();
 
-			try
-			{
-				var source = Faker.Create<OneLevelSource>();
-
-				var result = Projection.ProjectTo<OneLevelDestination>(source);
-			}
-			catch (Exception e) { Console.WriteLine(e); }
+			var result = Projection.ProjectTo<OneLevelDestination>(source);
 		}
+		catch (Exception e) { Console.WriteLine(e); }
 	}
 }

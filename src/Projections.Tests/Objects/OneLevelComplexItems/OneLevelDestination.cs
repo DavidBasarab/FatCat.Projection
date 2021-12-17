@@ -1,15 +1,12 @@
-using System;
+namespace FatCat.Projections.Tests.Objects.OneLevelComplexItems;
 
-namespace FatCat.Projections.Tests.Objects.OneLevelComplexItems
+public class OneLevelDestination
 {
-	public class OneLevelDestination
-	{
-		public SubObject SubObject { get; set; }
+	public DifferentSubObject DifferentSubObject { get; set; }
 
-		public DifferentSubObject DifferentSubObject { get; set; }
+	public SubObject SubObject { get; set; }
 
-		public TimeSpan Time { get; set; }
+	public TimeSpan Time { get; set; }
 
-		public int TimesCreated => 2;
-	}
+	public int TimesCreated => 2;
 }

@@ -1,9 +1,6 @@
-using System.Collections.Generic;
+namespace FatCat.Projections.Tests.Objects.SimpleItems.ItemsWithLists;
 
-namespace FatCat.Projections.Tests.Objects.SimpleItems.ItemsWithLists
+public class DestinationItemWithList
 {
-	public class DestinationItemWithList
-	{
-		public List<int> Numbers { get; set; }
-	}
+	public List<int> Numbers { get; set; }
 }

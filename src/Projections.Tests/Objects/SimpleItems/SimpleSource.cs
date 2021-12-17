@@ -1,21 +1,18 @@
-using System;
+namespace FatCat.Projections.Tests.Objects.SimpleItems;
 
-namespace FatCat.Projections.Tests.Objects.SimpleItems
+public class SimpleSource
 {
-	public class SimpleSource
-	{
-		public string? FirstName { get; set; }
+	public double ADouble { get; set; }
 
-		public int Number { get; set; }
+	public ushort AShort { get; set; }
 
-		public DateTime SomeDate { get; set; }
+	public string? FirstName { get; set; }
 
-		public bool SomeSwitch { get; set; }
+	public int Number { get; set; }
 
-		public TestingEnum SomeEnum { get; set; }
+	public DateTime SomeDate { get; set; }
 
-		public double ADouble { get; set; }
+	public TestingEnum SomeEnum { get; set; }
 
-		public ushort AShort { get; set; }
-	}
+	public bool SomeSwitch { get; set; }
 }

@@ -8,11 +8,47 @@ namespace FatCat.Projections.Tests;
 public class MultiLevelObjectProjection
 {
 	[Fact]
-	public void ProjectToAMultiLevelObject()
+	public void ProjectToAMultiLevelObjectDestination()
 	{
-		var multiLevelObject = Faker.Create<MultiLevelObject>();
+		var source = Faker.Create<MultiLevelObjectSource>();
 
-		var result = Projection.ProjectTo<MultiLevelObject>(multiLevelObject);
+		var destination = Projection.ProjectTo<MultiLevelObjectDestination>(source);
+
+		destination.CreatedTime
+					.Should()
+					.Be(source.CreatedTime);
+
+		destination.Name
+					.Should()
+					.Be(source.Name);
+
+		destination.Level1.Time
+					.Should()
+					.Be(source.Level1.Time);
+
+		destination.Level1.TimesCreated
+					.Should()
+					.Be(2);
+
+		destination.Level1.DifferentSubObject.Number
+					.Should()
+					.Be(source.Level1.DifferentSubObject.Number);
+
+		destination.Level1.DifferentSubObject.UpdatedDate
+					.Should()
+					.Be(source.Level1.DifferentSubObject.UpdatedDate);
+
+		destination.Level1.SubObject
+					.Should()
+					.BeEquivalentTo(source.Level1.SubObject);
+	}
+
+	[Fact]
+	public void ProjectToAMultiLevelObjectSameObject()
+	{
+		var multiLevelObject = Faker.Create<MultiLevelObjectSource>();
+
+		var result = Projection.ProjectTo<MultiLevelObjectSource>(multiLevelObject);
 
 		result
 			.Should()

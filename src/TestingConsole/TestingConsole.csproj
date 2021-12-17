@@ -10,8 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj"/>
-        <ProjectReference Include="..\Projections\Projections.csproj"/>
+        <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj" />
+        <ProjectReference Include="..\Projections\Projections.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
 </Project>

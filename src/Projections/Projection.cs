@@ -9,7 +9,7 @@ public static class Projection
 		return (ProjectTo(destinationType, source) as TDestination)!;
 	}
 
-	private static object? ProjectTo(Type destinationType, object source)
+	private static object ProjectTo(Type destinationType, object source)
 	{
 		var instance = Activator.CreateInstance(destinationType);
 
@@ -22,9 +22,14 @@ public static class Projection
 		{
 			var destinationProperty = destinationProperties.FirstOrDefault(i => i.Name == sourceProperty.Name);
 
-			if (destinationProperty == null || !destinationProperty.CanWrite) continue;
+			if (destinationProperty == null || !destinationProperty.CanWrite)
+			{
+				// Console.WriteLine($"DestinationType => {destinationType.FullName} | SourceType => {sourceType.FullName} | SourceProperty {sourceProperty.Name} Skipping!!!! | DestinationProperty IS NULL?  <{destinationProperty == null}> | !CanWrite? {!destinationProperty?.CanWrite}");
 
-			Console.WriteLine($"SourceProperty {sourceProperty.Name} | DestinationProperty {destinationProperty.Name}");
+				continue;
+			}
+
+			// Console.WriteLine($"{destinationType.FullName} | SourceProperty {sourceProperty.Name} | DestinationProperty {destinationProperty.Name}");
 
 			var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
 

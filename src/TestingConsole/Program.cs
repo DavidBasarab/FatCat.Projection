@@ -1,5 +1,6 @@
 using FatCat.Fakes;
-using FatCat.Projections.Tests.Objects.OneLevelComplexItems;
+using FatCat.Projections.Tests.Objects;
+using Newtonsoft.Json;
 
 namespace FatCat.Projections.TestingConsole;
 
@@ -11,9 +12,21 @@ public class Program
 
 		try
 		{
-			var source = Faker.Create<OneLevelSource>();
+			var source = Faker.Create<MultiLevelObjectSource>();
 
-			var result = Projection.ProjectTo<OneLevelDestination>(source);
+			var result = Projection.ProjectTo<MultiLevelObjectDestination>(source);
+
+			Console.WriteLine(string.Empty);
+			Console.WriteLine($"{new string('-', 100)}");
+			Console.WriteLine(string.Empty);
+
+			Console.WriteLine($"{JsonConvert.SerializeObject(source, Formatting.Indented)}");
+
+			Console.WriteLine(string.Empty);
+			Console.WriteLine($"{new string('-', 100)}");
+			Console.WriteLine(string.Empty);
+
+			Console.WriteLine($"{JsonConvert.SerializeObject(result, Formatting.Indented)}");
 		}
 		catch (Exception e) { Console.WriteLine(e); }
 	}

@@ -24,12 +24,8 @@ public static class Projection
 
 			if (destinationProperty == null || !destinationProperty.CanWrite)
 			{
-				// Console.WriteLine($"DestinationType => {destinationType.FullName} | SourceType => {sourceType.FullName} | SourceProperty {sourceProperty.Name} Skipping!!!! | DestinationProperty IS NULL?  <{destinationProperty == null}> | !CanWrite? {!destinationProperty?.CanWrite}");
-
 				continue;
 			}
-
-			// Console.WriteLine($"{destinationType.FullName} | SourceProperty {sourceProperty.Name} | DestinationProperty {destinationProperty.Name}");
 
 			var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
 

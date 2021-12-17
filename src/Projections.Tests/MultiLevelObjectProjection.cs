@@ -8,6 +8,18 @@ namespace FatCat.Projections.Tests;
 public class MultiLevelObjectProjection
 {
 	[Fact]
+	public void ObjectsAreNewlyCreated()
+	{
+		var source = Faker.Create<MultiLevelObjectSource>();
+
+		var destination = Projection.ProjectTo<MultiLevelObjectSource>(source);
+
+		ReferenceEquals(source, destination)
+			.Should()
+			.BeFalse();
+	}
+
+	[Fact]
 	public void ProjectToAMultiLevelObjectDestination()
 	{
 		var source = Faker.Create<MultiLevelObjectSource>();

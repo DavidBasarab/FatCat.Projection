@@ -29,6 +29,18 @@ public static class Projection
 
 			var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
 
+			if (sourceProperty.IsList())
+			{
+				var destinationListType = destinationProperty.PropertyType.GetGenericArguments()[0];
+
+				var genericListType = typeof(List<>);
+
+				var subCombinedType = genericListType.MakeGenericType(destinationListType);
+				var listAsInstance = Activator.CreateInstance(subCombinedType);
+
+				var addMethod = listAsInstance.GetType().GetMethod("Add");
+			}
+
 			var propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? ProjectTo(destinationProperty.PropertyType, sourceProperty.GetValue(source)!) : sourceProperty?.GetValue(source);
 
 			destinationProperty.SetValue(instance, propertyValue);

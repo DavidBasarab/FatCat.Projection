@@ -7,4 +7,6 @@ public class SourceItemWithList
 	public List<int> Numbers { get; set; }
 
 	public List<SubObject> SubList { get; set; }
+
+	// public List<SourceItemsWithStuff> ItemsWithStuff { get; set; }
 }

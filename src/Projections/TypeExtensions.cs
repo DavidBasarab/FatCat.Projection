@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Reflection;
 
 namespace FatCat.Projections;
 
@@ -7,6 +8,8 @@ internal static class TypeExtensions
 	public static bool IsDictionary(this Type type) => type.IsGenericType && type.Implements(typeof(IDictionary<,>));
 
 	public static bool IsList(this Type type) => type.IsGenericType && type.Implements(typeof(IEnumerable));
+
+	public static bool IsList(this PropertyInfo propertyInfo) => propertyInfo.PropertyType.IsList();
 
 	public static bool IsNotAList(this Type type) => !type.IsList();
 

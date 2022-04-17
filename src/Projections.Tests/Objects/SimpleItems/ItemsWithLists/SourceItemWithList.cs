@@ -8,5 +8,5 @@ public class SourceItemWithList
 
 	public List<SubObject> SubList { get; set; }
 
-	// public List<SourceItemsWithStuff> ItemsWithStuff { get; set; }
+	public List<SourceItemsWithStuff> ItemsWithStuff { get; set; }
 }

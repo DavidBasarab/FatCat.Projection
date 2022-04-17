@@ -8,5 +8,5 @@ public class DestinationItemWithList
 
 	public List<SubObject> SubList { get; set; }
 
-	// public List<DestinationItemsWithStuff> ItemsWithStuff { get; set; }
+	public List<DestinationItemsWithStuff> ItemsWithStuff { get; set; }
 }

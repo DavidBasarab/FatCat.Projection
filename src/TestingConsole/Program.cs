@@ -1,33 +1,29 @@
 using FatCat.Fakes;
-using FatCat.Projections.Tests.Objects;
+using FatCat.Projections;
+using FatCat.Projections.Tests.Objects.SimpleItems.ItemsWithLists;
+using FatCat.Toolkit.Console;
 using Newtonsoft.Json;
 
-namespace FatCat.Projections.TestingConsole;
+ConsoleLog.Write("Projection Test Console");
 
-public class Program
+try
 {
-	public static void Main(params string[] args)
-	{
-		Console.WriteLine("Projection Test Console");
+	var source = Faker.Create<SourceItemWithList>();
 
-		try
-		{
-			var source = Faker.Create<MultiLevelObjectSource>();
+	var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
-			var result = Projection.ProjectTo<MultiLevelObjectDestination>(source);
+	ConsoleLog.Write(string.Empty);
 
-			Console.WriteLine(string.Empty);
-			Console.WriteLine($"{new string('-', 100)}");
-			Console.WriteLine(string.Empty);
+	ConsoleLog.Write(string.Empty);
+	ConsoleLog.Write($"{new string('-', 100)}");
+	ConsoleLog.Write(string.Empty);
 
-			Console.WriteLine($"{JsonConvert.SerializeObject(source, Formatting.Indented)}");
+	ConsoleLog.Write($"{JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
-			Console.WriteLine(string.Empty);
-			Console.WriteLine($"{new string('-', 100)}");
-			Console.WriteLine(string.Empty);
+	ConsoleLog.Write(string.Empty);
+	ConsoleLog.Write($"{new string('-', 100)}");
+	ConsoleLog.Write(string.Empty);
 
-			Console.WriteLine($"{JsonConvert.SerializeObject(result, Formatting.Indented)}");
-		}
-		catch (Exception e) { Console.WriteLine(e); }
-	}
+	ConsoleLog.Write($"{JsonConvert.SerializeObject(result, Formatting.Indented)}");
 }
+catch (Exception e) { ConsoleLog.WriteException(e); }

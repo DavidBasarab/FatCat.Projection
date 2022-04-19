@@ -27,12 +27,15 @@ public class ObjectWithListProjections
 		CompareLists(source.SubList, result.SubList);
 	}
 
-	[Fact(Skip = "Need to fix list stuff first")]
+	[Fact]
 	public void ProjectWithDifferentTypes()
 	{
 		var source = Faker.Create<SourceItemWithList>();
 
 		var result = Projection.ProjectTo<DestinationItemWithList>(source);
+
+		source.Should()
+			.BeEquivalentTo(result);
 	}
 
 	private static void CompareLists<T>(IEnumerable<T> sourceList, IEnumerable<T> resultList)

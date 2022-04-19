@@ -13,6 +13,8 @@ public static class Projection
 
 	public static object ProjectTo(Type destinationType, object source)
 	{
+		if (destinationType.IsPrimitive) return source;
+
 		var instance = Activator.CreateInstance(destinationType);
 
 		var sourceType = source.GetType();

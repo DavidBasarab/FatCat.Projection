@@ -1,6 +1,8 @@
+using System.Collections;
 using FatCat.Fakes;
 using FatCat.Projections;
 using FatCat.Toolkit.Console;
+using Newtonsoft.Json;
 
 for (var i = 0; i < 4; i++) ConsoleLog.WriteEmptyLine();
 
@@ -15,6 +17,10 @@ try
 	var referenceEquals = ReferenceEquals(sourceList, copyList);
 
 	ConsoleLog.WriteCyan($"Does the list reference equal | <{referenceEquals}>");
+
+	var json = Newtonsoft.Json.JsonConvert.SerializeObject(copyList, Formatting.Indented);
+
+	ConsoleLog.WriteMagenta(json);
 
 	var strongList = copyList as List<PlayingObject>;
 }

@@ -9,7 +9,7 @@ public static class Projection
 		return (ProjectTo(destinationType, source) as TDestination)!;
 	}
 
-	private static object ProjectTo(Type destinationType, object source)
+	public static object ProjectTo(Type destinationType, object source)
 	{
 		var instance = Activator.CreateInstance(destinationType);
 

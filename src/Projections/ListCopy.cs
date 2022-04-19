@@ -1,5 +1,5 @@
 using System.Collections;
-using FatCat.Toolkit.Console;
+using FatCat.Projections.Extensions;
 
 namespace FatCat.Projections;
 
@@ -16,13 +16,7 @@ internal class ListCopy
 
 	public static IEnumerable? Copy(IEnumerable sourceList, Type destinationType)
 	{
-		ConsoleLog.WriteGreen($"Source DestinationType := {destinationType.FullName}");
-
-		var genericListType = typeof(List<>);
-
-		var destinationCombinedType = genericListType.MakeGenericType(destinationType);
-
-		var destinationList = Activator.CreateInstance(destinationCombinedType);
+		var destinationList = GenericExtensions.CreateListFromType(destinationType);
 
 		var addMethod = destinationList?.GetType().GetMethod("Add");
 

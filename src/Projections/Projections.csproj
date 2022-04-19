@@ -8,4 +8,8 @@
         <AssemblyName>FatCat.Projections</AssemblyName>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FatCat.Toolkit" Version="1.0.3" />
+    </ItemGroup>
+
 </Project>

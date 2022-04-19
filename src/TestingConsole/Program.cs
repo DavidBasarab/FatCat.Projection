@@ -1,29 +1,21 @@
 using FatCat.Fakes;
 using FatCat.Projections;
-using FatCat.Projections.Tests.Objects.SimpleItems.ItemsWithLists;
 using FatCat.Toolkit.Console;
-using Newtonsoft.Json;
+
+for (var i = 0; i < 4; i++) ConsoleLog.WriteEmptyLine();
 
 ConsoleLog.Write("Projection Test Console");
 
 try
 {
-	var source = Faker.Create<SourceItemWithList>();
+	var sourceList = Faker.Create<List<PlayingObject>>();
 
-	var result = Projection.ProjectTo<DestinationItemWithList>(source);
+	var copyList = ListCopy.Copy(sourceList);
 
-	ConsoleLog.Write(string.Empty);
+	var referenceEquals = ReferenceEquals(sourceList, copyList);
 
-	ConsoleLog.Write(string.Empty);
-	ConsoleLog.Write($"{new string('-', 100)}");
-	ConsoleLog.Write(string.Empty);
+	ConsoleLog.WriteCyan($"Does the list reference equal | <{referenceEquals}>");
 
-	ConsoleLog.Write($"{JsonConvert.SerializeObject(source, Formatting.Indented)}");
-
-	ConsoleLog.Write(string.Empty);
-	ConsoleLog.Write($"{new string('-', 100)}");
-	ConsoleLog.Write(string.Empty);
-
-	ConsoleLog.Write($"{JsonConvert.SerializeObject(result, Formatting.Indented)}");
+	var strongList = copyList as List<PlayingObject>;
 }
 catch (Exception e) { ConsoleLog.WriteException(e); }

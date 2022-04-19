@@ -1,6 +1,6 @@
-using System.Collections;
 using FatCat.Fakes;
 using FatCat.Projections.Tests.Objects.OneLevelComplexItems;
+using FatCat.Projections.Tests.Objects.SimpleItems.ItemsWithLists;
 using FluentAssertions;
 using Xunit;
 
@@ -20,6 +20,30 @@ public class CopyLists
 			.NotBeSameAs(sourceList);
 
 		var strongList = copyList as List<SubObject>;
+
+		strongList.Should()
+				.BeOfType<List<SubObject>>();
+
+		strongList
+			.Should()
+			.BeEquivalentTo(sourceList);
+	}
+
+	[Fact]
+	public void CanCopyListToADifferentListType()
+	{
+		var sourceList = Faker.Create<List<SourceItemsWithStuff>>();
+
+		var copyList = ListCopy.Copy(sourceList, typeof(DestinationItemsWithStuff));
+
+		copyList
+			.Should()
+			.NotBeSameAs(sourceList);
+
+		var strongList = copyList as List<DestinationItemsWithStuff>;
+
+		strongList.Should()
+				.BeOfType<List<DestinationItemsWithStuff>>();
 
 		strongList
 			.Should()

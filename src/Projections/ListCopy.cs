@@ -11,6 +11,11 @@ internal class ListCopy
 
 		var destinationType = sourceType.GetGenericArguments()[0];
 
+		return Copy(sourceList, destinationType);
+	}
+
+	public static IEnumerable? Copy(IEnumerable sourceList, Type destinationType)
+	{
 		ConsoleLog.WriteGreen($"Source DestinationType := {destinationType.FullName}");
 
 		var genericListType = typeof(List<>);
@@ -23,7 +28,7 @@ internal class ListCopy
 
 		foreach (var item in sourceList)
 		{
-			var copyOfItem = Projection.ProjectTo(item.GetType(), item);
+			var copyOfItem = Projection.ProjectTo(destinationType, item);
 
 			addMethod?.Invoke(destinationList, new[] { copyOfItem });
 		}

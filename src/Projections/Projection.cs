@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace FatCat.Projections;
 
 public static class Projection
@@ -22,26 +24,20 @@ public static class Projection
 		{
 			var destinationProperty = destinationProperties.FirstOrDefault(i => i.Name == sourceProperty.Name);
 
-			if (destinationProperty == null || !destinationProperty.CanWrite)
-			{
-				continue;
-			}
+			if (destinationProperty == null || !destinationProperty.CanWrite) continue;
 
 			var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
+
+			object? propertyValue;
+			var sourceValue = sourceProperty.GetValue(source)!;
 
 			if (sourceProperty.IsList())
 			{
 				var destinationListType = destinationProperty.PropertyType.GetGenericArguments()[0];
 
-				var genericListType = typeof(List<>);
-
-				var subCombinedType = genericListType.MakeGenericType(destinationListType);
-				var listAsInstance = Activator.CreateInstance(subCombinedType);
-
-				var addMethod = listAsInstance.GetType().GetMethod("Add");
+				propertyValue = ListCopy.Copy(sourceValue as IEnumerable, destinationListType);
 			}
-
-			var propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? ProjectTo(destinationProperty.PropertyType, sourceProperty.GetValue(source)!) : sourceProperty?.GetValue(source);
+			else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 
 			destinationProperty.SetValue(instance, propertyValue);
 		}

@@ -7,7 +7,7 @@ namespace FatCat.Projections.Tests;
 
 public class ObjectWithListProjections
 {
-	[Fact(Skip = "Need to fix list stuff first")]
+	[Fact]
 	public void CanProjectWithBasicListItems()
 	{
 		var source = Faker.Create<SourceItemWithList>();
@@ -17,9 +17,7 @@ public class ObjectWithListProjections
 		CompareLists(source.Numbers, result.Numbers);
 	}
 
-	// Check for same name source and destination where one is a list and the other is not
-
-	[Fact(Skip = "Need to fix list stuff first")]
+	[Fact]
 	public void CanProjectWithSubObjectList()
 	{
 		var source = Faker.Create<SourceItemWithList>();

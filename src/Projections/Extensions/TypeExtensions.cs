@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace FatCat.Projections;
+namespace FatCat.Projections.Extensions;
 
 internal static class TypeExtensions
 {
@@ -17,6 +17,6 @@ internal static class TypeExtensions
 	{
 		if (type == interfaceType) return false;
 
-		return interfaceType.IsGenericTypeDefinition && type.GetInterfaces().Where(t => t.IsGenericType).Select(t => t.GetGenericTypeDefinition()).Any(gt => gt == interfaceType) || interfaceType.IsAssignableFrom(type);
+		return (interfaceType.IsGenericTypeDefinition && type.GetInterfaces().Where(t => t.IsGenericType).Select(t => t.GetGenericTypeDefinition()).Any(gt => gt == interfaceType)) || interfaceType.IsAssignableFrom(type);
 	}
 }

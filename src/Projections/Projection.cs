@@ -1,4 +1,5 @@
 using System.Collections;
+using FatCat.Projections.Extensions;
 
 namespace FatCat.Projections;
 
@@ -15,9 +16,16 @@ public static class Projection
 	{
 		if (destinationType.IsPrimitive) return source;
 
-		var instance = Activator.CreateInstance(destinationType);
-
 		var sourceType = source.GetType();
+
+		if (sourceType.IsList())
+		{
+			var destinationListType = destinationType.GetGenericArguments()[0];
+			
+			return ListCopy.Copy(source as IEnumerable, destinationListType);
+		}
+
+		var instance = Activator.CreateInstance(destinationType);
 
 		var sourceProperties = sourceType.GetProperties();
 		var destinationProperties = destinationType.GetProperties();

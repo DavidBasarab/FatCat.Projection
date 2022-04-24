@@ -16,10 +16,6 @@ public class ListToListProjections
 
 		resultList
 			.Should()
-			.NotBeNull();
-
-		resultList
-			.Should()
 			.BeEquivalentTo(sourceList);
 	}
 }

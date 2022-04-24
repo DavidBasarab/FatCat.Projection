@@ -9,7 +9,7 @@ try
 	var sourceItem = Faker.Create<PlayingObject>();
 
 	new PlayingProjection<PlayingDestination, PlayingObject>()
-		.ForProperty(i => i.Number, s => 17)
+		.ForProperty(i => i.Number, s => s.UseForDude)
 		.Project(sourceItem);
 }
 catch (Exception e) { ConsoleLog.WriteException(e); }
@@ -36,10 +36,6 @@ public class PlayingProjection<TDest, TSource>
 	public PlayingProjection<TDest, TSource> ForProperty<TMember>(Expression<Func<TDest, TMember>> selector, Func<TSource, TMember> memberOptions)
 	{
 		var propertyName = GetMemberName(selector.Body);
-
-		var value = memberOptions(default!);
-
-		ConsoleLog.WriteMagenta($"So the Property NAME is!!!!!! <{propertyName}> | Value is <{value}>");
 
 		// overrides.Add(propertyName, memberOptions);
 		dude = new PlayingStuff<TSource>(propertyName, s => memberOptions(s));

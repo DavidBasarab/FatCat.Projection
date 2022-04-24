@@ -4,9 +4,9 @@ public class PlayingObject
 
 	public string? Name { get; set; }
 
-	public int Number { get; set; }
-
 	public DateTime UpdatedDate { get; set; }
+
+	public int UseForDude { get; set; }
 }
 
 public class PlayingDestination

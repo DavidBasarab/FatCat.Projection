@@ -29,6 +29,8 @@ internal class ProjectionProcessor
 
 	public object DoProjection()
 	{
+		EnsureProjectionValid();
+
 		if (destinationType.IsPrimitive) return source;
 
 		if (sourceType.IsList()) return ProjectList();
@@ -61,6 +63,23 @@ internal class ProjectionProcessor
 		destinationProperty.SetValue(instance, propertyValue);
 	}
 
+	private void EnsureProjectionValid()
+	{
+		var sourceIsList = sourceType.IsList();
+		var destinationIsList = destinationType.IsList();
+
+		if (sourceIsList && !destinationIsList) ThrowInvalidProjection();
+		if (!sourceIsList && destinationIsList) ThrowInvalidProjection();
+
+		if (sourceType.IsPrimitive && !destinationType.IsPrimitive) ThrowInvalidProjection();
+		if (!sourceType.IsPrimitive && destinationType.IsPrimitive) ThrowInvalidProjection();
+
+		if (sourceType.IsSignatureType)
+		{
+			
+		}
+	}
+
 	private object ProjectList()
 	{
 		var destinationListType = destinationType.GetGenericArguments()[0];
@@ -72,6 +91,8 @@ internal class ProjectionProcessor
 	{
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
 	}
+
+	private void ThrowInvalidProjection() { throw new InvalidProjectionException(sourceType, destinationType); }
 
 	private static bool ValidSubObject(TypeCode typeCode, Type type)
 	{

@@ -1,6 +1,6 @@
 namespace FatCat.Projections;
 
-public static class Projection
+public class Projection
 {
 	public static TDestination ProjectTo<TDestination>(object source) where TDestination : class
 	{

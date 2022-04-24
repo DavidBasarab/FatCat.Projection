@@ -6,11 +6,11 @@ namespace FatCat.Projections;
 
 internal class ProjectionProcessor
 {
-	private readonly PropertyInfo[]? destinationProperties;
+	private readonly PropertyInfo[] destinationProperties;
 	private readonly Type destinationType;
 	private readonly object source;
-	private readonly PropertyInfo[]? sourceProperties;
-	private readonly Type? sourceType;
+	private readonly PropertyInfo[] sourceProperties;
+	private readonly Type sourceType;
 	private object? instance;
 
 	internal ProjectionProcessor(Type destinationType, object source)

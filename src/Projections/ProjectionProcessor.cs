@@ -4,26 +4,28 @@ using FatCat.Projections.Extensions;
 
 namespace FatCat.Projections;
 
-public class ProjectionProcessor
+internal class ProjectionProcessor
 {
+	private readonly PropertyInfo[]? destinationProperties;
 	private readonly Type destinationType;
 	private readonly object source;
-	private PropertyInfo[] destinationProperties;
+	private readonly PropertyInfo[]? sourceProperties;
+	private readonly Type? sourceType;
 	private object? instance;
-	private PropertyInfo[] sourceProperties;
-	private Type sourceType;
 
-	public ProjectionProcessor(Type destinationType, object source)
+	internal ProjectionProcessor(Type destinationType, object source)
 	{
 		this.destinationType = destinationType;
 		this.source = source;
+
+		sourceType = source.GetType();
+		sourceProperties = sourceType.GetProperties();
+		destinationProperties = destinationType.GetProperties();
 	}
 
 	public object DoProjection()
 	{
 		if (destinationType.IsPrimitive) return source;
-
-		sourceType = source.GetType();
 
 		if (sourceType.IsList()) return ProjectList();
 
@@ -64,9 +66,6 @@ public class ProjectionProcessor
 	private void ProjectToInstance()
 	{
 		instance = Activator.CreateInstance(destinationType);
-
-		sourceProperties = sourceType.GetProperties();
-		destinationProperties = destinationType.GetProperties();
 
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
 	}

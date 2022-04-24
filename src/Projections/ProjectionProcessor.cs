@@ -14,7 +14,7 @@ internal class ProjectionProcessor
 	private readonly Type sourceType;
 
 	internal ProjectionProcessor(Type destinationType, object source)
-		: this(destinationType, source, Activator.CreateInstance(destinationType)) { }
+		: this(destinationType, source, destinationType.IsBasicType() ? null : Activator.CreateInstance(destinationType)) { }
 
 	public ProjectionProcessor(Type destinationType, object source, object? instance)
 	{
@@ -74,7 +74,10 @@ internal class ProjectionProcessor
 		// if (sourceType.IsBasicType() && !destinationType.IsBasicType()) ThrowInvalidProjection();
 		// if (!sourceType.IsBasicType() && destinationType.IsBasicType()) ThrowInvalidProjection();
 
-		if (!sourceType.IsBasicType() && destinationType.IsBasicType()) ThrowInvalidProjection();
+		var isSourceBasic = sourceType.IsBasicType();
+		var isDestinationBasic = destinationType.IsBasicType();
+
+		if (!isSourceBasic && isDestinationBasic) ThrowInvalidProjection();
 	}
 
 	private object ProjectList()

@@ -71,13 +71,10 @@ internal class ProjectionProcessor
 		if (sourceIsList && !destinationIsList) ThrowInvalidProjection();
 		if (!sourceIsList && destinationIsList) ThrowInvalidProjection();
 
-		if (sourceType.IsPrimitive && !destinationType.IsPrimitive) ThrowInvalidProjection();
-		if (!sourceType.IsPrimitive && destinationType.IsPrimitive) ThrowInvalidProjection();
+		// if (sourceType.IsBasicType() && !destinationType.IsBasicType()) ThrowInvalidProjection();
+		// if (!sourceType.IsBasicType() && destinationType.IsBasicType()) ThrowInvalidProjection();
 
-		if (sourceType.IsSignatureType)
-		{
-			
-		}
+		if (!sourceType.IsBasicType() && destinationType.IsBasicType()) ThrowInvalidProjection();
 	}
 
 	private object ProjectList()

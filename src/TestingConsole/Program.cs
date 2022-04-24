@@ -1,4 +1,3 @@
-using System.Collections;
 using FatCat.Fakes;
 using FatCat.Projections;
 using FatCat.Toolkit.Console;
@@ -18,7 +17,7 @@ try
 
 	ConsoleLog.WriteCyan($"Does the list reference equal | <{referenceEquals}>");
 
-	var json = Newtonsoft.Json.JsonConvert.SerializeObject(copyList, Formatting.Indented);
+	var json = JsonConvert.SerializeObject(copyList, Formatting.Indented);
 
 	ConsoleLog.WriteMagenta(json);
 

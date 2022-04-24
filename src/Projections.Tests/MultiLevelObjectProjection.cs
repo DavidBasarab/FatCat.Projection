@@ -12,7 +12,7 @@ public class MultiLevelObjectProjection
 	{
 		var source = Faker.Create<MultiLevelObjectSource>();
 
-		var destination = Projection.ProjectTo<MultiLevelObjectSource>(source);
+		var destination = new  Projection().ProjectTo<MultiLevelObjectSource>(source);
 
 		ReferenceEquals(source, destination)
 			.Should()
@@ -24,7 +24,7 @@ public class MultiLevelObjectProjection
 	{
 		var source = Faker.Create<MultiLevelObjectSource>();
 
-		var destination = Projection.ProjectTo<MultiLevelObjectDestination>(source);
+		var destination = new  Projection().ProjectTo<MultiLevelObjectDestination>(source);
 
 		destination.CreatedTime
 					.Should()
@@ -60,7 +60,7 @@ public class MultiLevelObjectProjection
 	{
 		var multiLevelObject = Faker.Create<MultiLevelObjectSource>();
 
-		var result = Projection.ProjectTo<MultiLevelObjectSource>(multiLevelObject);
+		var result = new  Projection().ProjectTo<MultiLevelObjectSource>(multiLevelObject);
 
 		result
 			.Should()

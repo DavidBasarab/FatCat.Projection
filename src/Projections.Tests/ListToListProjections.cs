@@ -12,7 +12,7 @@ public class ListToListProjections
 	{
 		var sourceList = Faker.Create<List<SourceItemsWithStuff>>();
 
-		var resultList = Projection.ProjectTo<List<SourceItemsWithStuff>>(sourceList);
+		var resultList = new  Projection().ProjectTo<List<SourceItemsWithStuff>>(sourceList);
 
 		resultList
 			.Should()
@@ -24,7 +24,7 @@ public class ListToListProjections
 	{
 		var sourceList = Faker.Create<List<SourceItemsWithStuff>>();
 
-		var resultList = Projection.ProjectTo<List<DestinationItemsWithStuff>>(sourceList);
+		var resultList = new  Projection().ProjectTo<List<DestinationItemsWithStuff>>(sourceList);
 
 		resultList
 			.Should()

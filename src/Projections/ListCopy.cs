@@ -22,7 +22,7 @@ internal class ListCopy
 
 		foreach (var item in sourceList)
 		{
-			var copyOfItem = Projection.ProjectTo(destinationType, item);
+			var copyOfItem = new Projection().ProjectTo(destinationType, item);
 
 			addMethod?.Invoke(destinationList, new[] { copyOfItem });
 		}

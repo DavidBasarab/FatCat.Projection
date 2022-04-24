@@ -8,15 +8,19 @@ internal class ProjectionProcessor
 {
 	private readonly PropertyInfo[] destinationProperties;
 	private readonly Type destinationType;
+	private readonly object? instance;
 	private readonly object source;
 	private readonly PropertyInfo[] sourceProperties;
 	private readonly Type sourceType;
-	private object? instance;
 
 	internal ProjectionProcessor(Type destinationType, object source)
+		: this(destinationType, source, Activator.CreateInstance(destinationType)) { }
+
+	public ProjectionProcessor(Type destinationType, object source, object? instance)
 	{
 		this.destinationType = destinationType;
 		this.source = source;
+		this.instance = instance;
 
 		sourceType = source.GetType();
 		sourceProperties = sourceType.GetProperties();
@@ -43,6 +47,7 @@ internal class ProjectionProcessor
 		var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
 
 		object? propertyValue;
+
 		var sourceValue = sourceProperty.GetValue(source)!;
 
 		if (sourceProperty.IsList())
@@ -51,7 +56,7 @@ internal class ProjectionProcessor
 
 			propertyValue = ListCopy.Copy(sourceValue as IEnumerable, destinationListType);
 		}
-		else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
+		else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? new Projection().ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 
 		destinationProperty.SetValue(instance, propertyValue);
 	}
@@ -65,8 +70,6 @@ internal class ProjectionProcessor
 
 	private void ProjectToInstance()
 	{
-		instance = Activator.CreateInstance(destinationType);
-
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
 	}
 

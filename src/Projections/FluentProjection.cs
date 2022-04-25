@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using FatCat.Projections.Extensions;
 
 namespace FatCat.Projections;
 
@@ -16,9 +17,21 @@ internal class ProjectionOption<TSource>
 	public object GetOptionValue(TSource source) => throw new NotImplementedException();
 }
 
-public class FluentProjection<TDestination, TSource>
+public class FluentProjection<TDestination, TSource> where TDestination : class
 {
-	public FluentProjection<TDestination, TSource> ForProperty<TMember>(Expression<Func<TDestination, TMember>> selector, Func<TSource, TMember> optionValueFunction) => throw new NotImplementedException();
+	private List<ProjectionOption<TSource>> ProjectionOptions { get; } = new();
 
-	public TDestination Project(TSource source) => throw new NotImplementedException();
+	public FluentProjection<TDestination, TSource> ForProperty<TMember>(Expression<Func<TDestination, TMember>> selector, Func<TSource, TMember> optionValueFunction)
+	{
+		ProjectionOptions.Add(new ProjectionOption<TSource>(selector.Body.GetMemberName(), s => optionValueFunction(s)));
+
+		return this;
+	}
+
+	public TDestination Project(TSource source)
+	{
+		var processor = new ProjectionProcessor(typeof(TDestination), typeof(TSource));
+
+		return (processor.DoProjection() as TDestination)!;
+	}
 }

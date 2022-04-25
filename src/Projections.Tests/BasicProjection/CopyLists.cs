@@ -4,7 +4,7 @@ using FatCat.Projections.Tests.Objects.SimpleItems.ItemsWithLists;
 using FluentAssertions;
 using Xunit;
 
-namespace FatCat.Projections.Tests;
+namespace FatCat.Projections.Tests.BasicProjection;
 
 public class CopyLists
 {

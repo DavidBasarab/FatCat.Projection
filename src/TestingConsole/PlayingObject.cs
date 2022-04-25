@@ -1,3 +1,5 @@
+namespace FatCat.Projections.TestingConsole;
+
 public class PlayingObject
 {
 	public DateTime CreatedDate { get; set; }

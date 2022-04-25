@@ -40,8 +40,19 @@ internal class ProjectionProcessor
 		if (sourceType.IsList()) return ProjectList();
 
 		ProjectToInstance();
+		AddPropertyOverrides();
 
 		return instance!;
+	}
+
+	private void AddPropertyOverrides()
+	{
+		foreach (var destinationProperty in destinationProperties)
+		{
+			var overrideValue = onPropertySetting(destinationProperty.Name, source);
+
+			if (overrideValue.Found) destinationProperty.SetValue(instance, overrideValue.Value);
+		}
 	}
 
 	private void AddPropertyValueToInstance(PropertyInfo sourceProperty)
@@ -62,13 +73,7 @@ internal class ProjectionProcessor
 
 			propertyValue = ListCopy.Copy(sourceValue as IEnumerable, destinationListType);
 		}
-		else
-		{
-			var overrideValue = onPropertySetting(destinationProperty.Name, sourceValue);
-
-			if (overrideValue.Found) propertyValue = overrideValue.Value;
-			else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
-		}
+		else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 
 		destinationProperty.SetValue(instance, propertyValue);
 	}

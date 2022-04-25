@@ -14,7 +14,7 @@ public class ProjectToExistingObject
 
 		var projectInstance = new MultiLevelObjectSource();
 
-		new Projection().ProjectTo(projectInstance, sourceItem);
+		Projection.ProjectTo(projectInstance, sourceItem);
 
 		projectInstance
 			.Should()

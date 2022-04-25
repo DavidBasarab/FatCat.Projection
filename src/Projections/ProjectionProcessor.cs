@@ -58,7 +58,7 @@ internal class ProjectionProcessor
 
 			propertyValue = ListCopy.Copy(sourceValue as IEnumerable, destinationListType);
 		}
-		else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? new Projection().ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
+		else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 
 		destinationProperty.SetValue(instance, propertyValue);
 	}

@@ -13,7 +13,7 @@ public class SimpleObjectProjection
 	{
 		var source = Faker.Create<SimpleSource>();
 
-		var result = new  Projection().ProjectTo<SimpleDestination>(source);
+		var result = Projection.ProjectTo<SimpleDestination>(source);
 
 		result.Should().BeOfType<SimpleDestination>();
 
@@ -25,7 +25,7 @@ public class SimpleObjectProjection
 	{
 		var source = Faker.Create<SimpleSource>();
 
-		var result = new  Projection().ProjectTo<SimpleSource>(source);
+		var result = Projection.ProjectTo<SimpleSource>(source);
 
 		ReferenceEquals(source, result)
 			.Should()
@@ -39,7 +39,7 @@ public class SimpleObjectProjection
 	{
 		var source = Faker.Create<SimpleSource>();
 
-		var result = new  Projection().ProjectTo<SimpleDestinationMoreProperties>(source);
+		var result = Projection.ProjectTo<SimpleDestinationMoreProperties>(source);
 
 		result.LastName.Should().BeNullOrEmpty();
 		result.FirstName.Should().Be(source.FirstName);
@@ -51,7 +51,7 @@ public class SimpleObjectProjection
 	{
 		var source = Faker.Create<SimpleSource>();
 
-		var result = new  Projection().ProjectTo<SimpleDestinationMissingProperty>(source);
+		var result = Projection.ProjectTo<SimpleDestinationMissingProperty>(source);
 
 		result.Number.Should().Be(source.Number);
 	}
@@ -61,7 +61,7 @@ public class SimpleObjectProjection
 	{
 		var source = Faker.Create<SourceItemWithList>();
 
-		var result = new  Projection().ProjectTo<DestinationItemWithList>(source);
+		var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
 		result.Should().BeEquivalentTo(source);
 	}

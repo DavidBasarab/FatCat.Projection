@@ -12,7 +12,7 @@ public class OneLevelObjectProjection
 	{
 		var source = Faker.Create<OneLevelSource>();
 
-		var result = new  Projection().ProjectTo<OneLevelDestination>(source);
+		var result = Projection.ProjectTo<OneLevelDestination>(source);
 
 		ReferenceEquals(source.SubObject, result.SubObject)
 			.Should()

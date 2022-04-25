@@ -12,7 +12,7 @@ public class ObjectWithListProjections
 	{
 		var source = Faker.Create<SourceItemWithList>();
 
-		var result = new  Projection().ProjectTo<DestinationItemWithList>(source);
+		var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
 		CompareLists(source.Numbers, result.Numbers);
 	}
@@ -22,7 +22,7 @@ public class ObjectWithListProjections
 	{
 		var source = Faker.Create<SourceItemWithList>();
 
-		var result = new  Projection().ProjectTo<DestinationItemWithList>(source);
+		var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
 		CompareLists(source.SubList, result.SubList);
 	}
@@ -32,7 +32,7 @@ public class ObjectWithListProjections
 	{
 		var source = Faker.Create<SourceItemWithList>();
 
-		var result = new  Projection().ProjectTo<DestinationItemWithList>(source);
+		var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
 		source.Should()
 			.BeEquivalentTo(result);

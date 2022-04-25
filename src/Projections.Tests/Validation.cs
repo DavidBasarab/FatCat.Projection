@@ -55,7 +55,7 @@ public class Validation
 	{
 		var source = Faker.Create(sourceType);
 
-		Action invalidAction = () => new Projection().ProjectTo(destinationType, source);
+		Action invalidAction = () => Projection.ProjectTo(destinationType, source);
 
 		invalidAction
 			.Should()

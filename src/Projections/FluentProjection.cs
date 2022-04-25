@@ -15,7 +15,7 @@ internal class ProjectionOption<TSource>
 		this.optionValueFunction = optionValueFunction;
 	}
 
-	public object GetOptionValue(TSource source) => throw new NotImplementedException();
+	public object GetOptionValue(TSource source) => optionValueFunction(source);
 }
 
 public class FluentProjection<TDestination, TSource> where TDestination : class where TSource : class
@@ -31,15 +31,28 @@ public class FluentProjection<TDestination, TSource> where TDestination : class 
 
 	public TDestination Project(TSource source)
 	{
-		var processor = new ProjectionProcessor(typeof(TDestination), source, null, DoCustomPropertyValue);
+		var processor = new ProjectionProcessor(typeof(TDestination), source, Activator.CreateInstance<TDestination>(), DoCustomPropertyValue);
 
 		return (processor.DoProjection() as TDestination)!;
 	}
 
-	private object DoCustomPropertyValue(string propertyName, object sourceItem)
+	private OverridePropertyValueResult DoCustomPropertyValue(string propertyName, object sourceItem)
 	{
 		var propertyOptions = ProjectionOptions.FirstOrDefault(i => i.DestinationMemberName == propertyName);
 
-		return propertyOptions?.GetOptionValue((sourceItem as TSource)!)!;
+		return propertyOptions != null ? new OverridePropertyValueResult(true, propertyOptions.GetOptionValue((sourceItem as TSource)!)) : new OverridePropertyValueResult(false);
+	}
+}
+
+internal class OverridePropertyValueResult
+{
+	public bool Found { get; set; }
+
+	public object? Value { get; set; }
+
+	public OverridePropertyValueResult(bool found, object? value = null)
+	{
+		Found = found;
+		Value = value;
 	}
 }

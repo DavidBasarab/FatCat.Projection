@@ -9,7 +9,7 @@ internal class ProjectionProcessor
 	private readonly PropertyInfo[] destinationProperties;
 	private readonly Type destinationType;
 	private readonly object? instance;
-	private readonly Func<string, object, object> onPropertySetting;
+	private readonly Func<string, object, OverridePropertyValueResult> onPropertySetting;
 	private readonly object source;
 	private readonly PropertyInfo[] sourceProperties;
 	private readonly Type sourceType;
@@ -17,14 +17,14 @@ internal class ProjectionProcessor
 	internal ProjectionProcessor(Type destinationType, object source)
 		: this(destinationType, source, destinationType.IsBasicType() ? null : Activator.CreateInstance(destinationType)) { }
 
-	public ProjectionProcessor(Type destinationType, object source, object? instance, Func<string, object, object>? getCustomPropertyValue = null)
+	public ProjectionProcessor(Type destinationType, object source, object? instance, Func<string, object, OverridePropertyValueResult>? getCustomPropertyValue = null)
 	{
 		this.destinationType = destinationType;
 		this.source = source;
 		this.instance = instance;
 
 		if (getCustomPropertyValue != null) onPropertySetting = getCustomPropertyValue;
-		else onPropertySetting = (_, _) => null!;
+		else onPropertySetting = (_, _) => new OverridePropertyValueResult(false);
 
 		sourceType = source.GetType();
 		sourceProperties = sourceType.GetProperties();
@@ -66,7 +66,8 @@ internal class ProjectionProcessor
 		{
 			var overrideValue = onPropertySetting(destinationProperty.Name, sourceValue);
 
-			propertyValue = overrideValue ?? (ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source));
+			if (overrideValue.Found) propertyValue = overrideValue.Value;
+			else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 		}
 
 		destinationProperty.SetValue(instance, propertyValue);

@@ -17,7 +17,10 @@ internal class ProjectionProcessor
 	internal ProjectionProcessor(Type destinationType, object source)
 		: this(destinationType, source, destinationType.IsBasicType() ? null : Activator.CreateInstance(destinationType)) { }
 
-	public ProjectionProcessor(Type destinationType, object source, object? instance, Func<string, object, OverridePropertyValueResult>? getCustomPropertyValue = null)
+	public ProjectionProcessor(Type destinationType,
+								object source,
+								object? instance,
+								Func<string, object, OverridePropertyValueResult>? getCustomPropertyValue = null)
 	{
 		this.destinationType = destinationType;
 		this.source = source;
@@ -51,14 +54,19 @@ internal class ProjectionProcessor
 		{
 			if (destinationProperty.PropertyType.IsNonBasicType())
 			{
-				var subObject = Activator.CreateInstance(destinationProperty.PropertyType);
+				var subObject = destinationProperty.GetValue(instance);
 
-				destinationProperty.SetValue(instance, subObject);
+				if (subObject == null)
+				{
+					subObject = Activator.CreateInstance(destinationProperty.PropertyType);
+
+					destinationProperty.SetValue(instance, subObject);
+				}
+
+				foreach (var subPropertyInfo in destinationProperty.PropertyType.GetProperties()) SetPropertyOnOverride(subPropertyInfo, subObject);
 			}
 
-			var overrideValue = onPropertySetting(destinationProperty.Name, source);
-
-			if (overrideValue.Found) destinationProperty.SetValue(instance, overrideValue.Value);
+			SetPropertyOnOverride(destinationProperty, instance);
 		}
 	}
 
@@ -106,6 +114,15 @@ internal class ProjectionProcessor
 	private void ProjectToInstance()
 	{
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
+	}
+
+	private void SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
+	{
+		var overrideValue = onPropertySetting(propertyInfo.Name, source);
+
+		// if (overrideValue.Value == null) return;
+
+		if (overrideValue.Found) propertyInfo.SetValue(objectToSet, overrideValue.Value);
 	}
 
 	private void ThrowInvalidProjection() { throw new InvalidProjectionException(sourceType, destinationType); }

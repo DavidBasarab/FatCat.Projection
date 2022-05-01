@@ -6,10 +6,3 @@ public class FluentSimpleSource
 
 	public int Number { get; set; }
 }
-
-public class FluentSimpleDestination
-{
-	public int DifferentNumber { get; set; }
-
-	public string? Name { get; set; }
-}

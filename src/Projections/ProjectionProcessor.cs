@@ -50,24 +50,9 @@ internal class ProjectionProcessor
 
 	private void AddPropertyOverrides()
 	{
-		foreach (var destinationProperty in destinationProperties)
-		{
-			if (destinationProperty.PropertyType.IsNonBasicType())
-			{
-				var subObject = destinationProperty.GetValue(instance);
+		var processor = new OverridePropertyProcessor(instance!, source, destinationProperties, onPropertySetting);
 
-				if (subObject == null)
-				{
-					subObject = Activator.CreateInstance(destinationProperty.PropertyType);
-
-					destinationProperty.SetValue(instance, subObject);
-				}
-
-				foreach (var subPropertyInfo in destinationProperty.PropertyType.GetProperties()) SetPropertyOnOverride(subPropertyInfo, subObject);
-			}
-
-			SetPropertyOnOverride(destinationProperty, instance);
-		}
+		processor.DoOverrides();
 	}
 
 	private void AddPropertyValueToInstance(PropertyInfo sourceProperty)
@@ -114,15 +99,6 @@ internal class ProjectionProcessor
 	private void ProjectToInstance()
 	{
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
-	}
-
-	private void SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
-	{
-		var overrideValue = onPropertySetting(propertyInfo.Name, source);
-
-		// if (overrideValue.Value == null) return;
-
-		if (overrideValue.Found) propertyInfo.SetValue(objectToSet, overrideValue.Value);
 	}
 
 	private void ThrowInvalidProjection() { throw new InvalidProjectionException(sourceType, destinationType); }

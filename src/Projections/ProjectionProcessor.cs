@@ -49,6 +49,13 @@ internal class ProjectionProcessor
 	{
 		foreach (var destinationProperty in destinationProperties)
 		{
+			if (destinationProperty.PropertyType.IsNonBasicType())
+			{
+				var subObject = Activator.CreateInstance(destinationProperty.PropertyType);
+
+				destinationProperty.SetValue(instance, subObject);
+			}
+
 			var overrideValue = onPropertySetting(destinationProperty.Name, source);
 
 			if (overrideValue.Found) destinationProperty.SetValue(instance, overrideValue.Value);

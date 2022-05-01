@@ -27,6 +27,8 @@ internal static class TypeExtensions
 
 	public static bool IsNotAList(this Type type) => !type.IsList();
 
+	public static bool IsNonBasicType(this Type type) => !type.IsBasicType();
+
 	private static bool Implements(this Type? type, Type interfaceType)
 	{
 		if (type == interfaceType) return false;

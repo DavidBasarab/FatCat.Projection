@@ -42,4 +42,18 @@ public class BasicFluentChanges
 			.Should()
 			.Be(source.Number);
 	}
+
+	[Fact]
+	public void CanSetThePropertyAsNull()
+	{
+		var source = Faker.Create<FluentSimpleSource>();
+
+		var result = new FluentProjection<FluentSimpleDestination, FluentSimpleSource>()
+					.ForProperty(i => i.Name, _ => null)
+					.Project(source);
+
+		result.Name
+			.Should()
+			.BeNull();
+	}
 }

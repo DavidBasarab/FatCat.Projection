@@ -5,10 +5,10 @@ namespace FatCat.Projections;
 
 internal class OverridePropertyProcessor
 {
-	private readonly object instance;
-	private readonly object source;
 	private readonly PropertyInfo[] destinationProperties;
+	private readonly object instance;
 	private readonly Func<string, object, OverridePropertyValueResult> onPropertySetting;
+	private readonly object source;
 
 	public OverridePropertyProcessor(object instance,
 									object source,

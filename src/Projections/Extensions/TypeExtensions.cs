@@ -25,9 +25,9 @@ internal static class TypeExtensions
 
 	public static bool IsList(this PropertyInfo propertyInfo) => propertyInfo.PropertyType.IsList();
 
-	public static bool IsNotAList(this Type type) => !type.IsList();
-
 	public static bool IsNonBasicType(this Type type) => !type.IsBasicType();
+
+	public static bool IsNotAList(this Type type) => !type.IsList();
 
 	private static bool Implements(this Type? type, Type interfaceType)
 	{

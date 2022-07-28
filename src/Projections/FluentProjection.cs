@@ -3,11 +3,18 @@ using FatCat.Projections.Extensions;
 
 namespace FatCat.Projections;
 
-public class FluentProjection<TDestination, TSource> where TDestination : class where TSource : class
+public interface IFluentProjection<TDestination, TSource> where TDestination : class where TSource : class
+{
+	IFluentProjection<TDestination, TSource> ForProperty<TMember>(Expression<Func<TDestination, TMember>> selector, Func<TSource, TMember> optionValueFunction);
+
+	TDestination Project(TSource source);
+}
+
+public class FluentProjection<TDestination, TSource> : IFluentProjection<TDestination, TSource> where TDestination : class where TSource : class
 {
 	private List<ProjectionOption<TSource>> ProjectionOptions { get; } = new();
 
-	public FluentProjection<TDestination, TSource> ForProperty<TMember>(Expression<Func<TDestination, TMember>> selector, Func<TSource, TMember> optionValueFunction)
+	public IFluentProjection<TDestination, TSource> ForProperty<TMember>(Expression<Func<TDestination, TMember>> selector, Func<TSource, TMember> optionValueFunction)
 	{
 		ProjectionOptions.Add(new ProjectionOption<TSource>(selector.Body.GetMemberName(), s => optionValueFunction(s)));
 

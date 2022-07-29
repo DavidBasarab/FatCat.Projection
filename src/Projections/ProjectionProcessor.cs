@@ -6,6 +6,13 @@ namespace FatCat.Projections;
 
 internal class ProjectionProcessor
 {
+	private static readonly List<Type> NonSubObjects = new()
+														{
+															typeof(TimeSpan),
+															typeof(DateTime),
+															typeof(Guid)
+														};
+
 	private readonly PropertyInfo[] destinationProperties;
 	private readonly Type destinationType;
 	private readonly object? instance;
@@ -105,8 +112,7 @@ internal class ProjectionProcessor
 
 	private static bool ValidSubObject(TypeCode typeCode, Type type)
 	{
-		if (type == typeof(TimeSpan)) return false;
-		if (type == typeof(DateTime)) return false;
+		if (NonSubObjects.Contains(type)) return false;
 
 		return type.IsNotAList() && typeCode == TypeCode.Object;
 	}

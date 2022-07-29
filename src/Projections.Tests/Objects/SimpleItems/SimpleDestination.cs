@@ -10,6 +10,8 @@ public class SimpleDestination
 
 	public int Number { get; set; }
 
+	public Guid SimpleId { get; set; }
+
 	public DateTime SomeDate { get; set; }
 
 	public TestingEnum SomeEnum { get; set; }

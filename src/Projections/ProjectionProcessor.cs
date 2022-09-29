@@ -78,7 +78,7 @@ internal class ProjectionProcessor
 		{
 			var destinationListType = destinationProperty.PropertyType.GetGenericArguments()[0];
 
-			propertyValue = ListCopy.Copy(sourceValue as IEnumerable, destinationListType);
+			propertyValue = ListCopy.Copy((sourceValue as IEnumerable)!, destinationListType);
 		}
 		else propertyValue = ValidSubObject(typeCode, destinationProperty.PropertyType) ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 
@@ -100,7 +100,7 @@ internal class ProjectionProcessor
 	{
 		var destinationListType = destinationType.GetGenericArguments()[0];
 
-		return ListCopy.Copy(source as IEnumerable, destinationListType);
+		return ListCopy.Copy((source as IEnumerable)!, destinationListType)!;
 	}
 
 	private void ProjectToInstance()

@@ -35,14 +35,14 @@ namespace FatCat.Projections.TestingConsole
 
 	public class PlayingProjection<TDest, TSource>
 	{
-		private PlayingStuff<TSource> dude;
+		private PlayingStuff<TSource> dude = null!;
 
 		public PlayingProjection<TDest, TSource> ForProperty<TMember>(Expression<Func<TDest, TMember>> selector, Func<TSource, TMember> memberOptions)
 		{
 			var propertyName = selector.Body.GetMemberName();
 
 			// overrides.Add(propertyName, memberOptions);
-			dude = new PlayingStuff<TSource>(propertyName, s => memberOptions(s));
+			dude = new PlayingStuff<TSource>(propertyName, s => memberOptions(s)!);
 
 			return this;
 		}
@@ -51,7 +51,7 @@ namespace FatCat.Projections.TestingConsole
 		{
 			var destinationInstance = Activator.CreateInstance<TDest>();
 
-			ConsoleLog.WriteMagenta($"This is where it would project {typeof(TDest).FullName} from <{source.GetType().FullName}>");
+			ConsoleLog.WriteMagenta($"This is where it would project {typeof(TDest).FullName} from <{source!.GetType().FullName}>");
 
 			var dudeValue = dude.GetValue(source);
 

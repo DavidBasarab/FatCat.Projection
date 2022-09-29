@@ -9,7 +9,7 @@ public class FluentComplexSource
 
 public class FluentKindOfSimpleDestination
 {
-	public string? FullTitle { get; set; }
+	public string FullTitle { get; set; }
 
 	public int TheNumber { get; set; }
 }

@@ -6,7 +6,7 @@ public class SimpleSource
 
 	public ushort AShort { get; set; }
 
-	public string? FirstName { get; set; }
+	public string FirstName { get; set; }
 
 	public int Number { get; set; }
 

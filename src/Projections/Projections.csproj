@@ -23,7 +23,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FatCat.Toolkit" Version="1.0.3" />
+        <PackageReference Include="FatCat.Toolkit" Version="1.0.51" />
     </ItemGroup>
 
 </Project>

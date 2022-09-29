@@ -2,9 +2,9 @@ namespace FatCat.Projections.Tests.Objects.FluentObjects;
 
 public class FluentComplexSource
 {
-	public FluentSimpleSource? Simple { get; set; }
+	public FluentSimpleSource Simple { get; set; }
 
-	public string? Title { get; set; }
+	public string Title { get; set; }
 }
 
 public class FluentKindOfSimpleDestination

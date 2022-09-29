@@ -5,6 +5,8 @@ namespace FatCat.Projections.Extensions;
 
 internal static class TypeExtensions
 {
+	public static bool IsArray(this Type type) => type.Implements(typeof(Array));
+
 	public static bool IsBasicType(this Type type)
 	{
 		var underlyingType = Nullable.GetUnderlyingType(type);

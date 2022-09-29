@@ -13,7 +13,7 @@ internal class ListCopy
 
 		return Copy(sourceList, destinationType);
 	}
-
+	
 	public static IEnumerable? Copy(IEnumerable sourceList, Type destinationType)
 	{
 		var destinationList = GenericExtensions.CreateListFromType(destinationType);

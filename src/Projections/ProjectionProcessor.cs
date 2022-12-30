@@ -82,15 +82,7 @@ internal class ProjectionProcessor
 		}
 		else
 		{
-			if (destinationProperty.PropertyType.IsArray())
-			{
-				var sourceArray = (Array)sourceValue;
-				var newArray = Array.CreateInstance(destinationProperty.PropertyType.GetElementType()!, sourceArray.Length);
-
-				Array.Copy(sourceArray, newArray, sourceArray.Length);
-
-				propertyValue = newArray;
-			}
+			if (destinationProperty.PropertyType.IsArray()) propertyValue = CopyArrayToDestination(sourceValue, destinationProperty);
 			else
 			{
 				var validSubObject = ValidSubObject(typeCode, destinationProperty.PropertyType);
@@ -100,6 +92,16 @@ internal class ProjectionProcessor
 		}
 
 		destinationProperty.SetValue(instance, propertyValue);
+	}
+
+	private static object CopyArrayToDestination(object sourceValue, PropertyInfo destinationProperty)
+	{
+		var sourceArray = (Array)sourceValue;
+		var newArray = Array.CreateInstance(destinationProperty.PropertyType.GetElementType()!, sourceArray.Length);
+
+		Array.Copy(sourceArray, newArray, sourceArray.Length);
+
+		return newArray;
 	}
 
 	private void EnsureProjectionValid()

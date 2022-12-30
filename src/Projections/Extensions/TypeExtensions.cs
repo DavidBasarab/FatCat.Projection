@@ -17,6 +17,7 @@ internal static class TypeExtensions
 		if (type == typeof(string)) return true;
 		if (type == typeof(TimeSpan)) return true;
 		if (type == typeof(DateTime)) return true;
+		if (type == typeof(byte)) return true;
 
 		return false;
 	}

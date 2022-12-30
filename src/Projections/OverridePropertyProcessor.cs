@@ -27,7 +27,7 @@ internal class OverridePropertyProcessor
 	{
 		foreach (var destinationProperty in destinationProperties)
 		{
-			if (destinationProperty.PropertyType.IsNonBasicType())
+			if (destinationProperty.PropertyType.IsNonBasicType() && IsTypeSupported(destinationProperty.PropertyType))
 			{
 				var subObject = destinationProperty.GetValue(instance);
 
@@ -45,11 +45,11 @@ internal class OverridePropertyProcessor
 		}
 	}
 
+	private bool IsTypeSupported(Type type) => type != typeof(byte[]);
+
 	private void SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
 	{
 		var overrideValue = onPropertySetting(propertyInfo.Name, source);
-
-		// if (overrideValue.Value == null) return;
 
 		if (overrideValue.Found) propertyInfo.SetValue(objectToSet, overrideValue.Value);
 	}

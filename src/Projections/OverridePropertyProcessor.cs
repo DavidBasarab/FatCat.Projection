@@ -45,7 +45,7 @@ internal class OverridePropertyProcessor
 
 				if (!overriderMade)
 				{
-					var sourceValue = source.GetPropertyValue(destinationProperty.Name);
+					var sourceValue = SafeGetPropertyValue(destinationProperty);
 
 					// If source is null the destination should be null
 					if (sourceValue == null) destinationProperty.SetValue(instance, null);
@@ -57,6 +57,12 @@ internal class OverridePropertyProcessor
 	}
 
 	private bool IsTypeSupported(Type type) => type != typeof(byte[]);
+
+	private object? SafeGetPropertyValue(PropertyInfo destinationProperty)
+	{
+		try { return source.GetPropertyValue(destinationProperty.Name); }
+		catch (MissingMemberException) { return null; }
+	}
 
 	private bool SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
 	{

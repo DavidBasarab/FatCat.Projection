@@ -20,6 +20,20 @@ public class ProjectionWithMissingProperty
 		public string Id { get; set; }
 
 		public string LastName { get; set; }
+
+		public SomeStruct Some { get; set; }
+	}
+
+	private struct SomeStruct
+	{
+		public int a;
+		public int b;
+
+		public SomeStruct()
+		{
+			a = 0;
+			b = 0;
+		}
 	}
 
 	private class Source

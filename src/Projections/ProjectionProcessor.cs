@@ -72,7 +72,14 @@ internal class ProjectionProcessor
 
 		object? propertyValue;
 
-		var sourceValue = sourceProperty.GetValue(source)!;
+		var sourceValue = sourceProperty.GetValue(source);
+
+		if (sourceValue == null)
+		{
+			destinationProperty.SetValue(instance, null);
+
+			return;
+		}
 
 		if (sourceProperty.IsList())
 		{
@@ -125,6 +132,8 @@ internal class ProjectionProcessor
 	private void ProjectToInstance()
 	{
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
+
+		var temp = instance;
 	}
 
 	private void ThrowInvalidProjection() { throw new InvalidProjectionException(sourceType, destinationType); }

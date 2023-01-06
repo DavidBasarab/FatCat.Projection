@@ -1,4 +1,5 @@
 using System.Reflection;
+using Fasterflect;
 using FatCat.Projections.Extensions;
 
 namespace FatCat.Projections;
@@ -38,7 +39,17 @@ internal class OverridePropertyProcessor
 					destinationProperty.SetValue(instance, subObject);
 				}
 
-				foreach (var subPropertyInfo in destinationProperty.PropertyType.GetProperties()) SetPropertyOnOverride(subPropertyInfo, subObject);
+				var overriderMade = false;
+
+				foreach (var subPropertyInfo in destinationProperty.PropertyType.GetProperties()) overriderMade |= SetPropertyOnOverride(subPropertyInfo, subObject);
+
+				if (!overriderMade)
+				{
+					var sourceValue = source.GetPropertyValue(destinationProperty.Name);
+
+					// If source is null the destination should be null
+					if (sourceValue == null) destinationProperty.SetValue(instance, null);
+				}
 			}
 
 			SetPropertyOnOverride(destinationProperty, instance);
@@ -47,10 +58,17 @@ internal class OverridePropertyProcessor
 
 	private bool IsTypeSupported(Type type) => type != typeof(byte[]);
 
-	private void SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
+	private bool SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
 	{
 		var overrideValue = onPropertySetting(propertyInfo.Name, source);
 
-		if (overrideValue.Found) propertyInfo.SetValue(objectToSet, overrideValue.Value);
+		if (overrideValue.Found)
+		{
+			propertyInfo.SetValue(objectToSet, overrideValue.Value);
+
+			return true;
+		}
+
+		return false;
 	}
 }

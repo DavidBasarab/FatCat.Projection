@@ -1,4 +1,4 @@
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		using System.Reflection;
+using System.Reflection;
 using Fasterflect;
 using FatCat.Projections.Extensions;
 
@@ -45,10 +45,13 @@ internal class OverridePropertyProcessor
 
 				if (!overriderMade)
 				{
-					var sourceValue = SafeGetPropertyValue(destinationProperty);
+					if (SourceHasProperty(destinationProperty))
+					{
+						var sourceValue = SafeGetPropertyValue(destinationProperty);
 
-					// If source is null the destination should be null
-					if (sourceValue == null) destinationProperty.SetValue(instance, null);
+						//If source is null the destination should be null
+						if (sourceValue == null) destinationProperty.SetValue(instance, null);
+					}
 				}
 			}
 
@@ -60,7 +63,12 @@ internal class OverridePropertyProcessor
 
 	private object? SafeGetPropertyValue(PropertyInfo destinationProperty)
 	{
-		try { return source.GetPropertyValue(destinationProperty.Name); }
+		try
+		{
+			if (source.GetType().Properties().Any(i => i.Name == destinationProperty.Name)) return source.GetPropertyValue(destinationProperty.Name);
+
+			return null;
+		}
 		catch (MissingMemberException) { return null; }
 	}
 
@@ -76,5 +84,11 @@ internal class OverridePropertyProcessor
 		}
 
 		return false;
+	}
+
+	private bool SourceHasProperty(PropertyInfo propertyInfo)
+	{
+		try { return source.GetType().Properties().Any(i => i.Name == propertyInfo.Name); }
+		catch (MissingMemberException) { return false; }
 	}
 }

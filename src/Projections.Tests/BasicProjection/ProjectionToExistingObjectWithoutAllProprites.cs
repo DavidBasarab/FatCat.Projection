@@ -36,6 +36,15 @@ public class ProjectionToExistingObjectWithoutSameProperty
 		result.NoOnSource
 			.Should()
 			.Be(destination.NoOnSource);
+
+		result.SubClass
+			.Should()
+			.NotBeNull();
+
+		result.SubClass
+			.Data
+			.Should()
+			.Be(destination.SubClass.Data);
 	}
 
 	private class Destination
@@ -47,6 +56,13 @@ public class ProjectionToExistingObjectWithoutSameProperty
 		public string NoOnSource { get; set; }
 
 		public string SomeData { get; set; }
+
+		public DestinationSubClass SubClass { get; set; }
+	}
+
+	public class DestinationSubClass
+	{
+		public string Data { get; set; }
 	}
 
 	private class Source

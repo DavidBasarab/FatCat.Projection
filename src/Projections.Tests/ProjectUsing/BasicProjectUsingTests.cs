@@ -10,12 +10,33 @@ public class BasicProjectUsingTests
 	public BasicProjectUsingTests() => ProjectionConfiguration.UseCustomProjection<CustomProjectionDestination, TestingCustomProjection>();
 
 	[Fact]
+	public void UseCustomProjectionUsingProjectorInstance()
+	{
+		TestingCustomProjection.Reset();
+
+		var projector = new Projector();
+
+		var source = Faker.Create<CustomProjectionSource>();
+
+		var result = projector.ProjectTo<CustomProjectionDestination>(source);
+
+		VerifyProjectionResult(result, source);
+	}
+
+	[Fact]
 	public void WillUseCustomProjectionForProjectTo()
 	{
+		TestingCustomProjection.Reset();
+
 		var source = Faker.Create<CustomProjectionSource>();
 
 		var result = Projection.ProjectTo<CustomProjectionDestination>(source);
 
+		VerifyProjectionResult(result, source);
+	}
+
+	private static void VerifyProjectionResult(CustomProjectionDestination result, CustomProjectionSource source)
+	{
 		result
 			.Should()
 			.Be(TestingCustomProjection.ItemToReturn);

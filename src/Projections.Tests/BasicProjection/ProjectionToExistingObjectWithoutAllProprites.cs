@@ -15,36 +15,32 @@ public class ProjectionToExistingObjectWithoutSameProperty
 
 		var destinationCopy = destination.DeepCopy();
 
-		var result = Projection.ProjectTo(destinationCopy, source) as Destination;
+		Projection.ProjectTo(destinationCopy, source);
 
-		ReferenceEquals(destinationCopy, result)
-			.Should()
-			.BeTrue();
+		destinationCopy.MoreData
+						.Should()
+						.Be(source.MoreData);
 
-		result.MoreData
-			.Should()
-			.Be(source.MoreData);
+		destinationCopy.Id
+						.Should()
+						.Be(destination.Id);
 
-		result.Id
-			.Should()
-			.Be(destination.Id);
+		destinationCopy.SomeData
+						.Should()
+						.Be(source.SomeData);
 
-		result.SomeData
-			.Should()
-			.Be(source.SomeData);
+		destinationCopy.NoOnSource
+						.Should()
+						.Be(destination.NoOnSource);
 
-		result.NoOnSource
-			.Should()
-			.Be(destination.NoOnSource);
+		destinationCopy.SubClass
+						.Should()
+						.NotBeNull();
 
-		result.SubClass
-			.Should()
-			.NotBeNull();
-
-		result.SubClass
-			.Data
-			.Should()
-			.Be(destination.SubClass.Data);
+		destinationCopy.SubClass
+						.Data
+						.Should()
+						.Be(destination.SubClass.Data);
 	}
 
 	private class Destination

@@ -12,9 +12,9 @@ public class ProjectToExistingObject
 	{
 		var sourceItem = Faker.Create<MultiLevelObjectSource>();
 
-		var projectInstance = new MultiLevelObjectSource();
+		object projectInstance = new MultiLevelObjectSource();
 
-		Projection.ProjectTo(projectInstance, sourceItem);
+		Projection.ProjectTo(ref projectInstance, sourceItem);
 
 		projectInstance
 			.Should()

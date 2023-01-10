@@ -7,14 +7,7 @@ namespace FatCat.Projections.Tests.ProjectUsing;
 
 public class NonStronglyTypedCustomProjection
 {
-	private readonly NonStronglyTypedDestination destination;
-
-	public NonStronglyTypedCustomProjection()
-	{
-		destination = Faker.Create<NonStronglyTypedDestination>();
-
-		ProjectionConfiguration.UseCustomProjection<TestingCustomProjection>(typeof(NonStronglyTypedDestination));
-	}
+	public NonStronglyTypedCustomProjection() => ProjectionConfiguration.UseCustomProjection<TestingCustomProjection>(typeof(NonStronglyTypedDestination));
 
 	[Fact]
 	public void OnProjectionObjectWillUseNonStronglyTypedProjection()
@@ -26,6 +19,30 @@ public class NonStronglyTypedCustomProjection
 		var result = projector.ProjectTo(typeof(NonStronglyTypedDestination), source);
 
 		VerifyProjectTo(result, source);
+	}
+
+	[Fact]
+	public void OnProjectionUsingExistingObjectWillUseNonStronglyTypedProjection()
+	{
+		var source = Faker.Create<NonStronglyTypedSource>();
+		object destination = new NonStronglyTypedDestination();
+
+		var projector = new Projector();
+
+		projector.ProjectTo(ref destination, source);
+
+		VerifyProjectByReference(destination, source);
+	}
+
+	[Fact]
+	public void WillUseNonStronglyTypedProjectionOnExistingObject()
+	{
+		var source = Faker.Create<NonStronglyTypedSource>();
+		object destination = new NonStronglyTypedDestination();
+
+		Projection.ProjectTo(ref destination, source);
+
+		VerifyProjectByReference(destination, source);
 	}
 
 	[Fact]
@@ -42,9 +59,24 @@ public class NonStronglyTypedCustomProjection
 	{
 		result
 			.Should()
-			.Be(TestingCustomProjection.ItemToReturn);
+			.BeEquivalentTo(TestingCustomProjection.ItemToReturn);
 
 		TestingCustomProjection.WasProjectToCalled
+								.Should()
+								.BeTrue();
+
+		TestingCustomProjection.CalledSource
+								.Should()
+								.Be(source);
+	}
+	
+	private static void VerifyProjectByReference(object result, NonStronglyTypedSource source)
+	{
+		result
+			.Should()
+			.BeEquivalentTo(TestingCustomProjection.ItemToReturn);
+
+		TestingCustomProjection.WasProjectCalled
 								.Should()
 								.BeTrue();
 
@@ -74,7 +106,7 @@ public class NonStronglyTypedCustomProjection
 			CalledSource = null;
 		}
 
-		public void Project(object destinationObject, object source)
+		public void Project(ref object destinationObject, object source)
 		{
 			destinationObject = ItemToReturn;
 

@@ -14,6 +14,14 @@ public class CustomProjectionConfigurationTests
 	}
 
 	[Fact]
+	public void IfTypeIsNotConfiguredToBeOverriddenANullIsReturned()
+	{
+		ProjectionConfiguration.GetCustomProjector<NeverGetConfiguredDestination>()
+								.Should()
+								.BeNull();
+	}
+
+	[Fact]
 	public void TheLastCustomProjectorWillBeUsed()
 	{
 		ProjectionConfiguration.UseCustomProjection<ConfigTestDestination, TestProjection>();
@@ -36,6 +44,8 @@ public class CustomProjectionConfigurationTests
 	}
 
 	private class ConfigTestDestination { }
+
+	private class NeverGetConfiguredDestination { }
 
 	private class SecondCustomProjection : IDoProjection<ConfigTestDestination>
 	{

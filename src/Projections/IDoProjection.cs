@@ -2,7 +2,7 @@
 
 public interface IDoProjection<TDestination> where TDestination : class
 {
-	TDestination ProjectTo(object source);
+	TDestination ProjectTo(object? source);
 }
 
 public interface IDoProjection

@@ -17,12 +17,29 @@ public class NonStronglyTypedCustomProjection
 	}
 
 	[Fact]
+	public void OnProjectionObjectWillUseNonStronglyTypedProjection()
+	{
+		var source = Faker.Create<NonStronglyTypedSource>();
+
+		var projector = new Projector();
+
+		var result = projector.ProjectTo(typeof(NonStronglyTypedDestination), source);
+
+		VerifyProjectTo(result, source);
+	}
+
+	[Fact]
 	public void WillUseNonStronglyTypedProjection()
 	{
 		var source = Faker.Create<NonStronglyTypedSource>();
 
 		var result = Projection.ProjectTo(typeof(NonStronglyTypedDestination), source);
 
+		VerifyProjectTo(result, source);
+	}
+
+	private static void VerifyProjectTo(object result, NonStronglyTypedSource source)
+	{
 		result
 			.Should()
 			.Be(TestingCustomProjection.ItemToReturn);

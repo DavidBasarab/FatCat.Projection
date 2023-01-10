@@ -1,5 +1,4 @@
-﻿using FatCat.Projections.Tests.Objects.SimpleItems;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 
 namespace FatCat.Projections.Tests.ProjectUsing;
@@ -9,7 +8,7 @@ public class CustomProjectionConfigurationTests
 	[Fact]
 	public void CanSaveACustomProjectorToConfig()
 	{
-		ProjectionConfiguration.UseCustomProjection<SimpleDestination, TestProjection>();
+		ProjectionConfiguration.UseCustomProjection<ConfigTestDestination, TestProjection>();
 
 		RunGetCustomerProjectorTest<TestProjection>();
 	}
@@ -17,15 +16,15 @@ public class CustomProjectionConfigurationTests
 	[Fact]
 	public void TheLastCustomProjectorWillBeUsed()
 	{
-		ProjectionConfiguration.UseCustomProjection<SimpleDestination, TestProjection>();
-		ProjectionConfiguration.UseCustomProjection<SimpleDestination, SecondCustomProjection>();
+		ProjectionConfiguration.UseCustomProjection<ConfigTestDestination, TestProjection>();
+		ProjectionConfiguration.UseCustomProjection<ConfigTestDestination, SecondCustomProjection>();
 
 		RunGetCustomerProjectorTest<SecondCustomProjection>();
 	}
 
-	private static void RunGetCustomerProjectorTest<T>() where T : IDoProjection<SimpleDestination>
+	private static void RunGetCustomerProjectorTest<T>() where T : IDoProjection<ConfigTestDestination>
 	{
-		var customProjector = ProjectionConfiguration.GetCustomProjector<SimpleDestination>();
+		var customProjector = ProjectionConfiguration.GetCustomProjector<ConfigTestDestination>();
 
 		customProjector
 			.Should()
@@ -36,17 +35,19 @@ public class CustomProjectionConfigurationTests
 			.BeOfType<T>();
 	}
 
-	private class SecondCustomProjection : IDoProjection<SimpleDestination>
-	{
-		public void Project(SimpleDestination destinationObject, object source) { throw new NotImplementedException(); }
+	private class ConfigTestDestination { }
 
-		public SimpleDestination ProjectTo(object source) => throw new NotImplementedException();
+	private class SecondCustomProjection : IDoProjection<ConfigTestDestination>
+	{
+		public void Project(ConfigTestDestination destinationObject, object source) { throw new NotImplementedException(); }
+
+		public ConfigTestDestination ProjectTo(object source) => throw new NotImplementedException();
 	}
 
-	private class TestProjection : IDoProjection<SimpleDestination>
+	private class TestProjection : IDoProjection<ConfigTestDestination>
 	{
-		public void Project(SimpleDestination destinationObject, object source) { throw new NotImplementedException(); }
+		public void Project(ConfigTestDestination destinationObject, object source) { throw new NotImplementedException(); }
 
-		public SimpleDestination ProjectTo(object source) => throw new NotImplementedException();
+		public ConfigTestDestination ProjectTo(object source) => throw new NotImplementedException();
 	}
 }

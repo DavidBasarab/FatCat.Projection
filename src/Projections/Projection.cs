@@ -4,6 +4,10 @@ public static class Projection
 {
 	public static TDestination ProjectTo<TDestination>(object source) where TDestination : class
 	{
+		var customProjection = ProjectionConfiguration.GetCustomProjector<TDestination>();
+
+		if (customProjection != null) return customProjection.ProjectTo(source);
+
 		var destinationType = typeof(TDestination);
 
 		return (ProjectTo(destinationType, source) as TDestination)!;

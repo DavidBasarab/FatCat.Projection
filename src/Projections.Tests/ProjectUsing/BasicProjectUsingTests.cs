@@ -7,14 +7,14 @@ namespace FatCat.Projections.Tests.ProjectUsing;
 
 public class BasicProjectUsingTests
 {
-	public BasicProjectUsingTests() => ProjectionConfiguration.UseCustomProjection<MultiLevelObjectDestination, TestingCustomProjection>();
+	public BasicProjectUsingTests() => ProjectionConfiguration.UseCustomProjection<CustomProjectionDestination, TestingCustomProjection>();
 
 	[Fact]
 	public void WillUseCustomProjectionForProjectTo()
 	{
-		var source = Faker.Create<MultiLevelObjectSource>();
+		var source = Faker.Create<CustomProjectionSource>();
 
-		var result = Projection.ProjectTo<MultiLevelObjectDestination>(source);
+		var result = Projection.ProjectTo<CustomProjectionDestination>(source);
 
 		result
 			.Should()
@@ -29,11 +29,15 @@ public class BasicProjectUsingTests
 								.Be(source);
 	}
 
-	private class TestingCustomProjection : IDoProjection<MultiLevelObjectDestination>
+	private class CustomProjectionDestination : MultiLevelObjectDestination { }
+
+	public class CustomProjectionSource : MultiLevelObjectSource { }
+
+	private class TestingCustomProjection : IDoProjection<CustomProjectionDestination>
 	{
 		public static object CalledSource { get; private set; }
 
-		public static MultiLevelObjectDestination ItemToReturn { get; } = Faker.Create<MultiLevelObjectDestination>();
+		public static CustomProjectionDestination ItemToReturn { get; } = Faker.Create<CustomProjectionDestination>();
 
 		public static bool WasProjectCalled { get; private set; }
 
@@ -46,7 +50,7 @@ public class BasicProjectUsingTests
 			CalledSource = null;
 		}
 
-		public void Project(MultiLevelObjectDestination destinationObject, object source)
+		public void Project(CustomProjectionDestination destinationObject, object source)
 		{
 			destinationObject = ItemToReturn;
 
@@ -54,7 +58,7 @@ public class BasicProjectUsingTests
 			CalledSource = source;
 		}
 
-		public MultiLevelObjectDestination ProjectTo(object source)
+		public CustomProjectionDestination ProjectTo(object source)
 		{
 			WasProjectToCalled = true;
 			CalledSource = source;

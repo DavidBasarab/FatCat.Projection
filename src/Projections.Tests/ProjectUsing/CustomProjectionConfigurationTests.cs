@@ -6,6 +6,22 @@ namespace FatCat.Projections.Tests.ProjectUsing;
 public class CustomProjectionConfigurationTests
 {
 	[Fact]
+	public void CanConfigureANonStronglyTypeProjectionConfiguration()
+	{
+		ProjectionConfiguration.UseCustomProjection<NonStronglyTypedProjection>(typeof(NonStronglyTypeDestination));
+
+		var projector = ProjectionConfiguration.GetCustomProjector(typeof(NonStronglyTypeDestination));
+
+		projector
+			.Should()
+			.NotBeNull();
+
+		projector
+			.Should()
+			.BeOfType<NonStronglyTypedProjection>();
+	}
+
+	[Fact]
 	public void CanSaveACustomProjectorToConfig()
 	{
 		ProjectionConfiguration.UseCustomProjection<ConfigTestDestination, TestProjection>();
@@ -46,6 +62,15 @@ public class CustomProjectionConfigurationTests
 	private class ConfigTestDestination { }
 
 	private class NeverGetConfiguredDestination { }
+
+	private class NonStronglyTypeDestination { }
+
+	private class NonStronglyTypedProjection : IDoProjection
+	{
+		public void Project(object destinationObject, object source) => throw new NotImplementedException();
+
+		public object ProjectTo(object source) => throw new NotImplementedException();
+	}
 
 	private class SecondCustomProjection : IDoProjection<ConfigTestDestination>
 	{

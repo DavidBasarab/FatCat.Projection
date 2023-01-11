@@ -13,38 +13,36 @@ public class ProjectionToExistingObjectWithoutSameProperty
 		var destination = Faker.Create<Destination>();
 		var source = Faker.Create<Source>();
 
-		var destinationCopy = destination.DeepCopy();
+		object destinationCopy = destination.DeepCopy();
 
-		var result = Projection.ProjectTo(destinationCopy, source) as Destination;
+		Projection.ProjectTo(ref destinationCopy, source);
 
-		ReferenceEquals(destinationCopy, result)
-			.Should()
-			.BeTrue();
+		var compareObject = destinationCopy as Destination;
 
-		result.MoreData
-			.Should()
-			.Be(source.MoreData);
+		compareObject.MoreData
+					.Should()
+					.Be(source.MoreData);
 
-		result.Id
-			.Should()
-			.Be(destination.Id);
+		compareObject.Id
+					.Should()
+					.Be(destination.Id);
 
-		result.SomeData
-			.Should()
-			.Be(source.SomeData);
+		compareObject.SomeData
+					.Should()
+					.Be(source.SomeData);
 
-		result.NoOnSource
-			.Should()
-			.Be(destination.NoOnSource);
+		compareObject.NoOnSource
+					.Should()
+					.Be(destination.NoOnSource);
 
-		result.SubClass
-			.Should()
-			.NotBeNull();
+		compareObject.SubClass
+					.Should()
+					.NotBeNull();
 
-		result.SubClass
-			.Data
-			.Should()
-			.Be(destination.SubClass.Data);
+		compareObject.SubClass
+					.Data
+					.Should()
+					.Be(destination.SubClass.Data);
 	}
 
 	private class Destination

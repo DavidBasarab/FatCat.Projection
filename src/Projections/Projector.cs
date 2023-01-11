@@ -6,7 +6,7 @@ public interface IProjector
 
 	object? ProjectTo(Type destinationType, object source);
 
-	object? ProjectTo(object destinationObject, object source);
+	void ProjectTo(ref object destinationObject, object source);
 }
 
 public class Projector : IProjector
@@ -15,5 +15,5 @@ public class Projector : IProjector
 
 	public object? ProjectTo(Type destinationType, object source) => Projection.ProjectTo(destinationType, source);
 
-	public object? ProjectTo(object destinationObject, object source) => Projection.ProjectTo(destinationObject, source);
+	public void ProjectTo(ref object destinationObject, object source) => Projection.ProjectTo(ref destinationObject, source);
 }

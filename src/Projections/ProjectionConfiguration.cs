@@ -12,7 +12,12 @@ public static class ProjectionConfiguration
 
 	internal static IDoProjection? GetCustomProjector(Type destinationType)
 	{
-		if (CustomProjectors.TryGetValue(destinationType, out var projectorType)) return Activator.CreateInstance(projectorType) as IDoProjection;
+		if (CustomProjectors.TryGetValue(destinationType, out var projectorType))
+		{
+			var instance = Activator.CreateInstance(projectorType);
+			
+			return instance as IDoProjection;
+		}
 
 		return null;
 	}

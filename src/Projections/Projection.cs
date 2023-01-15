@@ -19,7 +19,7 @@ public static class Projection
 
 		var customProjection = ProjectionConfiguration.GetCustomProjector(destinationType);
 
-		if (customProjection != null) return customProjection.ProjectTo(source);
+		if (customProjection != null) return customProjection.ProjectToObject(source);
 
 		return new ProjectionProcessor(destinationType, source).DoProjection();
 	}

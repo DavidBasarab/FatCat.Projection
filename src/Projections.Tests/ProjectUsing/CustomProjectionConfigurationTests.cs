@@ -69,7 +69,7 @@ public class CustomProjectionConfigurationTests
 	{
 		public void Project(ref object destinationObject, object source) => throw new NotImplementedException();
 
-		public object ProjectTo(object source) => throw new NotImplementedException();
+		public object ProjectToObject(object source) => throw new NotImplementedException();
 	}
 
 	private class SecondCustomProjection : IDoProjection<ConfigTestDestination>
@@ -77,6 +77,10 @@ public class CustomProjectionConfigurationTests
 		public void Project(ConfigTestDestination destinationObject, object source) { throw new NotImplementedException(); }
 
 		public ConfigTestDestination ProjectTo(object source) => throw new NotImplementedException();
+
+		public void Project(ref object destinationObject, object source) { throw new NotImplementedException(); }
+
+		public object ProjectToObject(object source) => throw new NotImplementedException();
 	}
 
 	private class TestProjection : IDoProjection<ConfigTestDestination>
@@ -84,5 +88,9 @@ public class CustomProjectionConfigurationTests
 		public void Project(ConfigTestDestination destinationObject, object source) { throw new NotImplementedException(); }
 
 		public ConfigTestDestination ProjectTo(object source) => throw new NotImplementedException();
+
+		public void Project(ref object destinationObject, object source) { throw new NotImplementedException(); }
+
+		public object ProjectToObject(object source) => throw new NotImplementedException();
 	}
 }

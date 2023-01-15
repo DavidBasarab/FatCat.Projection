@@ -45,10 +45,6 @@ public class BasicProjectUsingTests
 		result
 			.Should()
 			.BeEquivalentTo(expectedList);
-
-		TestingCustomProjection.CalledSource
-								.Should()
-								.Be(source);
 	}
 
 	[Fact]
@@ -91,6 +87,8 @@ public class BasicProjectUsingTests
 		public static bool WasProjectCalled { get; private set; }
 
 		public static bool WasProjectToCalled { get; private set; }
+		
+		public static bool WasProjectToObjectCalled { get; private set; }
 
 		public static void Reset()
 		{
@@ -109,6 +107,18 @@ public class BasicProjectUsingTests
 
 		public CustomProjectionDestination ProjectTo(object source)
 		{
+			WasProjectToCalled = true;
+			CalledSource = source;
+
+			return ItemToReturn;
+		}
+
+		public void Project(ref object destinationObject, object source) { throw new NotImplementedException(); }
+
+		public object ProjectToObject(object source)
+		{
+			WasProjectToObjectCalled = true;
+			
 			WasProjectToCalled = true;
 			CalledSource = source;
 

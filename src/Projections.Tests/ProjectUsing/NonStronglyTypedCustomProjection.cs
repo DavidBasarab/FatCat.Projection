@@ -114,7 +114,7 @@ public class NonStronglyTypedCustomProjection
 			CalledSource = source;
 		}
 
-		public object ProjectTo(object source)
+		public object ProjectToObject(object source)
 		{
 			WasProjectToCalled = true;
 			CalledSource = source;

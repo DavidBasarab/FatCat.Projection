@@ -24,6 +24,34 @@ public class BasicProjectUsingTests
 	}
 
 	[Fact]
+	public void WhenProjectingToAListWillUseCustomProjection()
+	{
+		TestingCustomProjection.Reset();
+
+		var source = Faker.Create<List<CustomProjectionSource>>(2);
+
+		var result = Projection.ProjectTo<List<CustomProjectionDestination>>(source);
+
+		TestingCustomProjection.WasProjectToCalled
+								.Should()
+								.BeTrue();
+
+		var expectedList = new List<CustomProjectionDestination>
+							{
+								TestingCustomProjection.ItemToReturn,
+								TestingCustomProjection.ItemToReturn
+							};
+
+		result
+			.Should()
+			.BeEquivalentTo(expectedList);
+
+		TestingCustomProjection.CalledSource
+								.Should()
+								.Be(source);
+	}
+
+	[Fact]
 	public void WillUseCustomProjectionForProjectTo()
 	{
 		TestingCustomProjection.Reset();

@@ -5,7 +5,7 @@ namespace FatCat.Projections;
 
 internal class ListCopy
 {
-	public static IEnumerable? Copy(IEnumerable sourceList)
+	public static IEnumerable Copy(IEnumerable sourceList)
 	{
 		var sourceType = sourceList.GetType();
 
@@ -14,7 +14,7 @@ internal class ListCopy
 		return Copy(sourceList, destinationType);
 	}
 	
-	public static IEnumerable? Copy(IEnumerable sourceList, Type destinationType)
+	public static IEnumerable Copy(IEnumerable sourceList, Type destinationType)
 	{
 		var destinationList = GenericExtensions.CreateListFromType(destinationType);
 

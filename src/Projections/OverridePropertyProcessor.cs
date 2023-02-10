@@ -14,7 +14,7 @@ internal class OverridePropertyProcessor
 	public OverridePropertyProcessor(object instance,
 									object source,
 									PropertyInfo[] destinationProperties,
-									Func<string, object, OverridePropertyValueResult>? getCustomPropertyValue = null)
+									Func<string, object, OverridePropertyValueResult> getCustomPropertyValue = null)
 	{
 		this.instance = instance;
 		this.source = source;
@@ -61,7 +61,7 @@ internal class OverridePropertyProcessor
 
 	private bool IsTypeSupported(Type type) => type != typeof(byte[]);
 
-	private object? SafeGetPropertyValue(PropertyInfo destinationProperty)
+	private object SafeGetPropertyValue(PropertyInfo destinationProperty)
 	{
 		try
 		{
@@ -72,7 +72,7 @@ internal class OverridePropertyProcessor
 		catch (MissingMemberException) { return null; }
 	}
 
-	private bool SetPropertyOnOverride(PropertyInfo propertyInfo, object? objectToSet)
+	private bool SetPropertyOnOverride(PropertyInfo propertyInfo, object objectToSet)
 	{
 		var overrideValue = onPropertySetting(propertyInfo.Name, source);
 

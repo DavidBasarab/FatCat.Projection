@@ -13,7 +13,7 @@ public static class Projection
 		return (ProjectTo(destinationType, source) as TDestination)!;
 	}
 
-	public static object? ProjectTo(Type destinationType, object? source)
+	public static object ProjectTo(Type destinationType, object source)
 	{
 		if (source == null) return null;
 
@@ -24,7 +24,7 @@ public static class Projection
 		return new ProjectionProcessor(destinationType, source).DoProjection();
 	}
 
-	public static void ProjectTo(ref object destinationObject, object? source)
+	public static void ProjectTo(ref object destinationObject, object source)
 	{
 		var customProjection = ProjectionConfiguration.GetCustomProjector(destinationObject.GetType());
 

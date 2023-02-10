@@ -2,7 +2,7 @@ namespace FatCat.Projections.Extensions;
 
 public class GenericExtensions
 {
-	public static object? CreateListFromType(Type listType)
+	public static object CreateListFromType(Type listType)
 	{
 		var genericListType = typeof(List<>);
 

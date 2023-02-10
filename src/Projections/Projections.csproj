@@ -9,9 +9,10 @@
         <PackageProjectUrl>https://github.com/DavidBasarab/FatCat.Projection</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/DavidBasarab/FatCat.Projection</RepositoryUrl>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <RootNamespace>FatCat.Projections</RootNamespace>
         <AssemblyName>FatCat.Projections</AssemblyName>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -23,7 +24,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FatCat.Toolkit" Version="1.0.105" />
+        <PackageReference Include="FatCat.Toolkit" Version="1.0.108" />
     </ItemGroup>
 
 </Project>

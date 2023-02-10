@@ -15,7 +15,7 @@ internal class ProjectionProcessor
 
 	private readonly PropertyInfo[] destinationProperties;
 	private readonly Type destinationType;
-	private readonly object? instance;
+	private readonly object instance;
 	private readonly Func<string, object, OverridePropertyValueResult> onPropertySetting;
 	private readonly object source;
 	private readonly PropertyInfo[] sourceProperties;
@@ -26,8 +26,8 @@ internal class ProjectionProcessor
 
 	public ProjectionProcessor(Type destinationType,
 								object source,
-								object? instance,
-								Func<string, object, OverridePropertyValueResult>? getCustomPropertyValue = null)
+								object instance,
+								Func<string, object, OverridePropertyValueResult> getCustomPropertyValue = null)
 	{
 		this.destinationType = destinationType;
 		this.source = source;
@@ -70,7 +70,7 @@ internal class ProjectionProcessor
 
 		var typeCode = Type.GetTypeCode(destinationProperty.PropertyType);
 
-		object? propertyValue;
+		object propertyValue;
 
 		var sourceValue = sourceProperty.GetValue(source);
 

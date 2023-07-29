@@ -61,7 +61,11 @@ internal class ProjectionProcessor
 
 	private void AddPropertyOverrides()
 	{
-		var processor = new OverridePropertyProcessor(instance!, source, destinationProperties, onPropertySetting);
+		var processor = new OverridePropertyProcessor(instance!, 
+													source, 
+													destinationProperties, 
+													onPropertySetting, 
+													settings);
 
 		processor.DoOverrides();
 	}
@@ -101,6 +105,8 @@ internal class ProjectionProcessor
 				propertyValue = validSubObject ? Projection.ProjectTo(destinationProperty.PropertyType, sourceValue) : sourceProperty?.GetValue(source);
 			}
 		}
+
+		if (propertyValue is null && settings.IsFlagSet(ProjectionSettings.DoNotProjectNull)) return;
 
 		destinationProperty.SetValue(instance, propertyValue);
 	}

@@ -1,6 +1,7 @@
 using System.Reflection;
 using Fasterflect;
 using FatCat.Projections.Extensions;
+using FatCat.Toolkit.Extensions;
 
 namespace FatCat.Projections;
 
@@ -9,16 +10,19 @@ internal class OverridePropertyProcessor
 	private readonly PropertyInfo[] destinationProperties;
 	private readonly object instance;
 	private readonly Func<string, object, OverridePropertyValueResult> onPropertySetting;
+	private readonly ProjectionSettings projectionSettings;
 	private readonly object source;
 
 	public OverridePropertyProcessor(object instance,
 									object source,
 									PropertyInfo[] destinationProperties,
-									Func<string, object, OverridePropertyValueResult> getCustomPropertyValue = null)
+									Func<string, object, OverridePropertyValueResult> getCustomPropertyValue = null,
+									ProjectionSettings projectionSettings = ProjectionSettings.None)
 	{
 		this.instance = instance;
 		this.source = source;
 		this.destinationProperties = destinationProperties;
+		this.projectionSettings = projectionSettings;
 
 		if (getCustomPropertyValue != null) onPropertySetting = getCustomPropertyValue;
 		else onPropertySetting = (_, _) => new OverridePropertyValueResult(false);
@@ -34,9 +38,12 @@ internal class OverridePropertyProcessor
 
 				if (subObject == null)
 				{
-					subObject = Activator.CreateInstance(destinationProperty.PropertyType);
+					if (!projectionSettings.IsFlagSet(ProjectionSettings.DoNotProjectNull))
+					{
+						subObject = Activator.CreateInstance(destinationProperty.PropertyType);
 
-					destinationProperty.SetValue(instance, subObject);
+						destinationProperty.SetValue(instance, subObject);
+					}
 				}
 
 				var overriderMade = false;
@@ -50,7 +57,7 @@ internal class OverridePropertyProcessor
 						var sourceValue = SafeGetPropertyValue(destinationProperty);
 
 						//If source is null the destination should be null
-						if (sourceValue == null) destinationProperty.SetValue(instance, null);
+						if (sourceValue == null && !projectionSettings.IsFlagSet(ProjectionSettings.DoNotProjectNull)) destinationProperty.SetValue(instance, null);
 					}
 				}
 			}

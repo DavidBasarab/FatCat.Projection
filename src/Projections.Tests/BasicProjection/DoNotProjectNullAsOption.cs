@@ -22,11 +22,11 @@ public class DoNotProjectNullAsOption
 
 		VerifyResult(projectionItem, source, destinationItem);
 	}
-	
+
 	[Fact]
-	public void DoProjectionAsAWebRequest()
+	public void DoNotNullSubObjectOnProjection()
 	{
-		var source = new SimulateWebRequest
+		var source = new SourceItem
 					{
 						FirstName = "Will be populated",
 					};
@@ -34,21 +34,19 @@ public class DoNotProjectNullAsOption
 		var destinationItem = Faker.Create<DestinationItem>();
 		var projectionItem = (object)destinationItem.DeepCopy();
 
-		Projection.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
+		var projector = new Projector();
+
+		projector.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
 
 		var result = (DestinationItem)projectionItem;
 
-		result.FirstName
+		result.SubObject
 			.Should()
-			.Be(source.FirstName);
+			.NotBeNull();
 
-		result.SecondName
+		result.SubObject
 			.Should()
-			.Be(destinationItem.SecondName);
-
-		result.ThirdName
-			.Should()
-			.Be(destinationItem.ThirdName);
+			.BeEquivalentTo(destinationItem.SubObject);
 	}
 
 	[Fact]
@@ -69,6 +67,34 @@ public class DoNotProjectNullAsOption
 		VerifyResult(projectionItem, source, destinationItem);
 	}
 
+	[Fact]
+	public void DoProjectionAsAWebRequest()
+	{
+		var source = new SimulateWebRequest
+					{
+						FirstName = "Will be populated",
+					};
+
+		var destinationItem = Faker.Create<DestinationItem>();
+		var projectionItem = (object)destinationItem.DeepCopy();
+
+		Projection.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
+
+		var result = (DestinationItem)projectionItem;
+
+		result.FirstName
+			.Should()
+			.Be(source.FirstName);
+		
+		result.SecondName
+			.Should()
+			.Be(destinationItem.SecondName);
+		
+		result.ThirdName
+			.Should()
+			.Be(destinationItem.ThirdName);
+	}
+
 	private static void VerifyResult(object projectionItem, SourceItem source, DestinationItem destinationItem)
 	{
 		var result = (DestinationItem)projectionItem;
@@ -76,11 +102,11 @@ public class DoNotProjectNullAsOption
 		result.FirstName
 			.Should()
 			.Be(source.FirstName);
-
+		
 		result.SecondName
 			.Should()
 			.Be(destinationItem.SecondName);
-
+		
 		result.ThirdName
 			.Should()
 			.Be(destinationItem.ThirdName);
@@ -100,9 +126,20 @@ public class DoNotProjectNullAsOption
 	public class SourceItem
 	{
 		public string FirstName { get; set; }
+		
+		public string SecondName { get; set; }
+
+		public SubObject SubObject { get; set; }
+
+		public string ThirdName { get; set; }
+	}
+
+	public class SubObject
+	{
+		public int FirstNumber { get; set; }
 
 		public string SecondName { get; set; }
 
-		public string ThirdName { get; set; }
+		public string ThirdThing { get; set; }
 	}
 }

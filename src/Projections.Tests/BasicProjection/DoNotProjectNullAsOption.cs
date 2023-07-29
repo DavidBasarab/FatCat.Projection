@@ -46,7 +46,7 @@ public class DoNotProjectNullAsOption
 
 		result.SubObject
 			.Should()
-			.Be(destinationItem.SubObject);
+			.BeEquivalentTo(destinationItem.SubObject);
 	}
 
 	[Fact]
@@ -85,11 +85,11 @@ public class DoNotProjectNullAsOption
 		result.FirstName
 			.Should()
 			.Be(source.FirstName);
-
+		
 		result.SecondName
 			.Should()
 			.Be(destinationItem.SecondName);
-
+		
 		result.ThirdName
 			.Should()
 			.Be(destinationItem.ThirdName);
@@ -102,11 +102,11 @@ public class DoNotProjectNullAsOption
 		result.FirstName
 			.Should()
 			.Be(source.FirstName);
-
+		
 		result.SecondName
 			.Should()
 			.Be(destinationItem.SecondName);
-
+		
 		result.ThirdName
 			.Should()
 			.Be(destinationItem.ThirdName);
@@ -126,7 +126,7 @@ public class DoNotProjectNullAsOption
 	public class SourceItem
 	{
 		public string FirstName { get; set; }
-
+		
 		public string SecondName { get; set; }
 
 		public SubObject SubObject { get; set; }

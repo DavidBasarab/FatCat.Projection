@@ -22,7 +22,51 @@ public class DoNotProjectNullAsOption
 
 		VerifyResult(projectionItem, source, destinationItem);
 	}
-	
+
+	[Fact]
+	public void DoNotNullSubObjectOnProjection()
+	{
+		var source = new SourceItem
+					{
+						FirstName = "Will be populated",
+					};
+
+		var destinationItem = Faker.Create<DestinationItem>();
+		var projectionItem = (object)destinationItem.DeepCopy();
+
+		var projector = new Projector();
+
+		projector.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
+
+		var result = (DestinationItem)projectionItem;
+
+		result.SubObject
+			.Should()
+			.NotBeNull();
+
+		result.SubObject
+			.Should()
+			.Be(destinationItem.SubObject);
+	}
+
+	[Fact]
+	public void DoNotProjectNullUsingNonStaticProjector()
+	{
+		var source = new SourceItem
+					{
+						FirstName = "Will be populated",
+					};
+
+		var destinationItem = Faker.Create<DestinationItem>();
+		var projectionItem = (object)destinationItem.DeepCopy();
+
+		var projector = new Projector();
+
+		projector.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
+
+		VerifyResult(projectionItem, source, destinationItem);
+	}
+
 	[Fact]
 	public void DoProjectionAsAWebRequest()
 	{
@@ -49,24 +93,6 @@ public class DoNotProjectNullAsOption
 		result.ThirdName
 			.Should()
 			.Be(destinationItem.ThirdName);
-	}
-
-	[Fact]
-	public void DoNotProjectNullUsingNonStaticProjector()
-	{
-		var source = new SourceItem
-					{
-						FirstName = "Will be populated",
-					};
-
-		var destinationItem = Faker.Create<DestinationItem>();
-		var projectionItem = (object)destinationItem.DeepCopy();
-
-		var projector = new Projector();
-
-		projector.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
-
-		VerifyResult(projectionItem, source, destinationItem);
 	}
 
 	private static void VerifyResult(object projectionItem, SourceItem source, DestinationItem destinationItem)
@@ -103,6 +129,17 @@ public class DoNotProjectNullAsOption
 
 		public string SecondName { get; set; }
 
+		public SubObject SubObject { get; set; }
+
 		public string ThirdName { get; set; }
+	}
+
+	public class SubObject
+	{
+		public int FirstNumber { get; set; }
+
+		public string SecondName { get; set; }
+
+		public string ThirdThing { get; set; }
 	}
 }

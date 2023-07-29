@@ -102,6 +102,8 @@ internal class ProjectionProcessor
 			}
 		}
 
+		if (propertyValue is null && settings.IsFlagSet(ProjectionSettings.DoNotProjectNull)) return;
+
 		destinationProperty.SetValue(instance, propertyValue);
 	}
 

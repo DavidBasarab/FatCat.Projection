@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using FatCat.Projections.Extensions;
+using FatCat.Toolkit.Extensions;
 
 namespace FatCat.Projections;
 
@@ -17,21 +18,24 @@ internal class ProjectionProcessor
 	private readonly Type destinationType;
 	private readonly object instance;
 	private readonly Func<string, object, OverridePropertyValueResult> onPropertySetting;
+	private readonly ProjectionSettings settings;
 	private readonly object source;
 	private readonly PropertyInfo[] sourceProperties;
 	private readonly Type sourceType;
 
 	internal ProjectionProcessor(Type destinationType, object source)
-		: this(destinationType, source, destinationType.IsBasicType() ? null : Activator.CreateInstance(destinationType)) { }
+		: this(destinationType, source, destinationType.IsBasicType() ? null : Activator.CreateInstance(destinationType), ProjectionSettings.None) { }
 
 	public ProjectionProcessor(Type destinationType,
 								object source,
 								object instance,
+								ProjectionSettings settings,
 								Func<string, object, OverridePropertyValueResult> getCustomPropertyValue = null)
 	{
 		this.destinationType = destinationType;
 		this.source = source;
 		this.instance = instance;
+		this.settings = settings;
 
 		if (getCustomPropertyValue != null) onPropertySetting = getCustomPropertyValue;
 		else onPropertySetting = (_, _) => new OverridePropertyValueResult(false);
@@ -76,7 +80,7 @@ internal class ProjectionProcessor
 
 		if (sourceValue == null)
 		{
-			destinationProperty.SetValue(instance, null);
+			if (!settings.IsFlagSet(ProjectionSettings.DoNotProjectNull)) destinationProperty.SetValue(instance, null);
 
 			return;
 		}
@@ -132,8 +136,6 @@ internal class ProjectionProcessor
 	private void ProjectToInstance()
 	{
 		foreach (var sourceProperty in sourceProperties) AddPropertyValueToInstance(sourceProperty);
-
-		var temp = instance;
 	}
 
 	private void ThrowInvalidProjection() { throw new InvalidProjectionException(sourceType, destinationType); }

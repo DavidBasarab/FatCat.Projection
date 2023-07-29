@@ -23,7 +23,7 @@ public class FluentProjection<TDestination, TSource> : IFluentProjection<TDestin
 
 	public TDestination Project(TSource source)
 	{
-		var processor = new ProjectionProcessor(typeof(TDestination), source, Activator.CreateInstance<TDestination>(), DoCustomPropertyValue);
+		var processor = new ProjectionProcessor(typeof(TDestination), source, Activator.CreateInstance<TDestination>(), ProjectionSettings.None, DoCustomPropertyValue);
 
 		return (processor.DoProjection() as TDestination)!;
 	}

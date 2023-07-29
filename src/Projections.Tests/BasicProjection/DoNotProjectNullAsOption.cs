@@ -34,7 +34,7 @@ public class DoNotProjectNullAsOption
 		var destinationItem = Faker.Create<DestinationItem>();
 		var projectionItem = (object)destinationItem.DeepCopy();
 
-		Projection.ProjectTo(ref projectionItem, source);
+		Projection.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
 
 		var result = (DestinationItem)projectionItem;
 

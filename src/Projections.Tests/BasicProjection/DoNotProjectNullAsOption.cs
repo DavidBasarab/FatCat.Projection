@@ -16,9 +16,9 @@ public class DoNotProjectNullAsOption
 					};
 
 		var destinationItem = Faker.Create<DestinationItem>();
-		var projectionItem = (object)destinationItem;
+		var projectionItem = (object)destinationItem.DeepCopy();
 
-		Projection.ProjectTo(ref projectionItem, source);
+		Projection.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
 
 		VerifyResult(projectionItem, source, destinationItem);
 	}
@@ -60,11 +60,11 @@ public class DoNotProjectNullAsOption
 					};
 
 		var destinationItem = Faker.Create<DestinationItem>();
-		var projectionItem = (object)destinationItem;
+		var projectionItem = (object)destinationItem.DeepCopy();
 
 		var projector = new Projector();
 
-		projector.ProjectTo(ref projectionItem, source);
+		projector.ProjectTo(ref projectionItem, source, ProjectionSettings.DoNotProjectNull);
 
 		VerifyResult(projectionItem, source, destinationItem);
 	}

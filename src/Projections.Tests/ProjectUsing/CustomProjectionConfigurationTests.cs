@@ -67,7 +67,7 @@ public class CustomProjectionConfigurationTests
 
 	private class NonStronglyTypedProjection : IDoProjection
 	{
-		public void Project(ref object destinationObject, object source) => throw new NotImplementedException();
+		public void Project(ref object destinationObject, object source) {  }
 
 		public object ProjectToObject(object source) => throw new NotImplementedException();
 	}

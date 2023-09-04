@@ -4,13 +4,13 @@ namespace FatCat.Projections;
 
 public static class ProjectionConfiguration
 {
-	private static ConcurrentDictionary<Type, Type> CustomProjectors { get; } = new();
+	public static ConcurrentDictionary<Type, Type> CustomProjectors { get; } = new();
 
 	public static void UseCustomProjection<TDestination, TCustomProjector>() where TDestination : class where TCustomProjector : IDoProjection<TDestination> => AddCustomProjector(typeof(TDestination), typeof(TCustomProjector));
 
 	public static void UseCustomProjection<TCustomProjector>(Type destinationType) where TCustomProjector : IDoProjection => AddCustomProjector(destinationType, typeof(TCustomProjector));
 
-	internal static IDoProjection GetCustomProjector(Type destinationType)
+	public static IDoProjection GetCustomProjector(Type destinationType)
 	{
 		if (CustomProjectors.TryGetValue(destinationType, out var projectorType))
 		{
@@ -22,7 +22,7 @@ public static class ProjectionConfiguration
 		return null;
 	}
 
-	internal static IDoProjection<TDestination> GetCustomProjector<TDestination>() where TDestination : class
+	public static IDoProjection<TDestination> GetCustomProjector<TDestination>() where TDestination : class
 	{
 		if (CustomProjectors.TryGetValue(typeof(TDestination), out var projectorType)) return Activator.CreateInstance(projectorType) as IDoProjection<TDestination>;
 

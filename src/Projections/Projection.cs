@@ -1,3 +1,5 @@
+using FatCat.Toolkit.Console;
+
 namespace FatCat.Projections;
 
 public static class Projection
@@ -19,7 +21,12 @@ public static class Projection
 
 		var customProjection = ProjectionConfiguration.GetCustomProjector(destinationType);
 
-		if (customProjection != null) return customProjection.ProjectToObject(source);
+		if (customProjection != null)
+		{
+			ConsoleLog.WriteCyan($"Using Custom Projection for <{source.GetType().FullName}> | Projector <{customProjection.GetType().FullName}>");
+
+			return customProjection.ProjectToObject(source);
+		}
 
 		return new ProjectionProcessor(destinationType, source).DoProjection();
 	}
@@ -30,11 +37,13 @@ public static class Projection
 
 		if (customProjection != null)
 		{
+			ConsoleLog.WriteCyan($"Using Custom Projection for <{destinationObject.GetType().FullName}> | Projector <{customProjection.GetType().FullName}>");
+
 			customProjection.Project(ref destinationObject, source);
-			
+
 			return;
 		}
-		
+
 		new ProjectionProcessor(destinationObject.GetType(), source!, destinationObject, settings).DoProjection();
 	}
 }

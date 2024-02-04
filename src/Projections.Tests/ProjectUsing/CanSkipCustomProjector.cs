@@ -13,7 +13,7 @@ public class CanSkipCustomProjector
     }
 
     [Fact]
-    public void WillSkipCustomProjector()
+    public void WillSkipCustomProjectorForCreatedObject()
     {
         var source = Faker.Create<AnExampleSource>();
         object destination = new AnExampleDestination();
@@ -31,12 +31,73 @@ public class CanSkipCustomProjector
     }
 
     [Fact]
-    public void WillUseCustomProjector()
+    public void WillSkipCustomProjectorForGeneric()
+    {
+        var source = Faker.Create<AnExampleSource>();
+
+        var destination = projector.ProjectTo<AnExampleDestination>(
+            source,
+            ProjectionSettings.SkipCustomProjector
+        );
+
+        var expectedDestination = new AnExampleDestination
+        {
+            RandomNumber = source.RandomNumber,
+            RandomString = source.RandomString,
+            SecondRandomString = source.SecondRandomString
+        };
+
+        destination.Should().BeEquivalentTo(expectedDestination);
+    }
+
+    [Fact]
+    public void WillSkipCustomProjectorForType()
+    {
+        var source = Faker.Create<AnExampleSource>();
+
+        var destination = projector.ProjectTo(
+            typeof(AnExampleDestination),
+            source,
+            ProjectionSettings.SkipCustomProjector
+        );
+
+        var expectedDestination = new AnExampleDestination
+        {
+            RandomNumber = source.RandomNumber,
+            RandomString = source.RandomString,
+            SecondRandomString = source.SecondRandomString
+        };
+
+        destination.Should().BeEquivalentTo(expectedDestination);
+    }
+
+    [Fact]
+    public void WillUseCustomProjectorForCreatedObject()
     {
         var source = Faker.Create<AnExampleSource>();
         object destination = new AnExampleDestination();
 
         projector.ProjectTo(ref destination, source);
+
+        destination.Should().BeEquivalentTo(AnExampleCustomProjector.Destination);
+    }
+
+    [Fact]
+    public void WillUseCustomProjectorForGeneric()
+    {
+        var source = Faker.Create<AnExampleSource>();
+
+        var destination = projector.ProjectTo<AnExampleDestination>(source);
+
+        destination.Should().BeEquivalentTo(AnExampleCustomProjector.Destination);
+    }
+
+    [Fact]
+    public void WillUseCustomProjectorForType()
+    {
+        var source = Faker.Create<AnExampleSource>();
+
+        var destination = projector.ProjectTo(typeof(AnExampleDestination), source);
 
         destination.Should().BeEquivalentTo(AnExampleCustomProjector.Destination);
     }

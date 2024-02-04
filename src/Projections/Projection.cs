@@ -1,3 +1,5 @@
+using FatCat.Toolkit.Extensions;
+
 namespace FatCat.Projections;
 
 public static class Projection
@@ -42,7 +44,7 @@ public static class Projection
     {
         var customProjection = ProjectionConfiguration.GetCustomProjector(destinationObject.GetType());
 
-        if (customProjection != null)
+        if (!settings.IsFlagSet(ProjectionSettings.SkipCustomProjector) && customProjection != null)
         {
             customProjection.Project(ref destinationObject, source);
 

@@ -2,20 +2,28 @@ namespace FatCat.Projections;
 
 public interface IProjector
 {
-    TDestination ProjectTo<TDestination>(object source, ProjectionSettings settings = ProjectionSettings.None)
+    TDestination ProjectTo<TDestination>(object source)
+        where TDestination : class
+    {
+        return ProjectTo<TDestination>(source, ProjectionSettings.None);
+    }
+
+    object ProjectTo(Type destinationType, object source)
+    {
+        return ProjectTo(destinationType, source, ProjectionSettings.None);
+    }
+
+    void ProjectTo(ref object destinationObject, object source)
+    {
+        ProjectTo(ref destinationObject, source, ProjectionSettings.None);
+    }
+
+    TDestination ProjectTo<TDestination>(object source, ProjectionSettings settings)
         where TDestination : class;
 
-    object ProjectTo(
-        Type destinationType,
-        object source,
-        ProjectionSettings settings = ProjectionSettings.None
-    );
+    object ProjectTo(Type destinationType, object source, ProjectionSettings settings);
 
-    void ProjectTo(
-        ref object destinationObject,
-        object source,
-        ProjectionSettings settings = ProjectionSettings.None
-    );
+    void ProjectTo(ref object destinationObject, object source, ProjectionSettings settings);
 }
 
 public class Projector : IProjector

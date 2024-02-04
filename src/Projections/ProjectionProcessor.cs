@@ -7,8 +7,7 @@ namespace FatCat.Projections;
 
 internal class ProjectionProcessor
 {
-    private static readonly List<Type> NonSubObjects =
-        new() { typeof(TimeSpan), typeof(DateTime), typeof(Guid) };
+    private static readonly List<Type> NonSubObjects = [typeof(TimeSpan), typeof(DateTime), typeof(Guid)];
 
     private readonly PropertyInfo[] destinationProperties;
     private readonly Type destinationType;

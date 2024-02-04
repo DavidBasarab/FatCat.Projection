@@ -2,13 +2,13 @@ namespace FatCat.Projections;
 
 internal class OverridePropertyValueResult
 {
-	public bool Found { get; set; }
+    public bool Found { get; set; }
 
-	public object Value { get; set; }
+    public object Value { get; set; }
 
-	public OverridePropertyValueResult(bool found, object value = null)
-	{
-		Found = found;
-		Value = value;
-	}
+    public OverridePropertyValueResult(bool found, object value = null)
+    {
+        Found = found;
+        Value = value;
+    }
 }

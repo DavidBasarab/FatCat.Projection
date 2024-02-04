@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-    <VersionPrefix>1.0.19</VersionPrefix>
+    <VersionPrefix>1.0.20</VersionPrefix>
         <Authors>David Basarab</Authors>
         <PackageTags>tools</PackageTags>
         <PackageProjectUrl>https://github.com/DavidBasarab/FatCat.Projection</PackageProjectUrl>
@@ -16,15 +16,19 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FatCat.Toolkit" Version="1.0.173" />
+        <PackageReference Include="CSharpier.MsBuild" Version="0.27.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="FatCat.Toolkit" Version="1.0.198"/>
     </ItemGroup>
 
 </Project>

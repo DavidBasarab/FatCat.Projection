@@ -1,125 +1,117 @@
 ﻿using FatCat.Fakes;
 using FatCat.Projections.Tests.Objects;
-using FluentAssertions;
-using Xunit;
 
 namespace FatCat.Projections.Tests.ProjectUsing;
 
 public class NonStronglyTypedCustomProjection
 {
-	public NonStronglyTypedCustomProjection() => ProjectionConfiguration.UseCustomProjection<TestingCustomProjection>(typeof(NonStronglyTypedDestination));
+    public NonStronglyTypedCustomProjection()
+    {
+        ProjectionConfiguration.UseCustomProjection<TestingCustomProjection>(
+            typeof(NonStronglyTypedDestination)
+        );
+    }
 
-	[Fact]
-	public void OnProjectionObjectWillUseNonStronglyTypedProjection()
-	{
-		var source = Faker.Create<NonStronglyTypedSource>();
+    [Fact]
+    public void OnProjectionObjectWillUseNonStronglyTypedProjection()
+    {
+        var source = Faker.Create<NonStronglyTypedSource>();
 
-		var projector = new Projector();
+        var projector = new Projector();
 
-		var result = projector.ProjectTo(typeof(NonStronglyTypedDestination), source);
+        var result = projector.ProjectTo(typeof(NonStronglyTypedDestination), source);
 
-		VerifyProjectTo(result, source);
-	}
+        VerifyProjectTo(result, source);
+    }
 
-	[Fact]
-	public void OnProjectionUsingExistingObjectWillUseNonStronglyTypedProjection()
-	{
-		var source = Faker.Create<NonStronglyTypedSource>();
-		object destination = new NonStronglyTypedDestination();
+    [Fact]
+    public void OnProjectionUsingExistingObjectWillUseNonStronglyTypedProjection()
+    {
+        var source = Faker.Create<NonStronglyTypedSource>();
+        object destination = new NonStronglyTypedDestination();
 
-		var projector = new Projector();
+        var projector = new Projector();
 
-		projector.ProjectTo(ref destination, source);
+        projector.ProjectTo(ref destination, source);
 
-		VerifyProjectByReference(destination, source);
-	}
+        VerifyProjectByReference(destination, source);
+    }
 
-	[Fact]
-	public void WillUseNonStronglyTypedProjectionOnExistingObject()
-	{
-		var source = Faker.Create<NonStronglyTypedSource>();
-		object destination = new NonStronglyTypedDestination();
+    [Fact]
+    public void WillUseNonStronglyTypedProjection()
+    {
+        var source = Faker.Create<NonStronglyTypedSource>();
 
-		Projection.ProjectTo(ref destination, source);
+        var result = Projection.ProjectTo(typeof(NonStronglyTypedDestination), source);
 
-		VerifyProjectByReference(destination, source);
-	}
+        VerifyProjectTo(result, source);
+    }
 
-	[Fact]
-	public void WillUseNonStronglyTypedProjection()
-	{
-		var source = Faker.Create<NonStronglyTypedSource>();
+    [Fact]
+    public void WillUseNonStronglyTypedProjectionOnExistingObject()
+    {
+        var source = Faker.Create<NonStronglyTypedSource>();
+        object destination = new NonStronglyTypedDestination();
 
-		var result = Projection.ProjectTo(typeof(NonStronglyTypedDestination), source);
+        Projection.ProjectTo(ref destination, source);
 
-		VerifyProjectTo(result, source);
-	}
+        VerifyProjectByReference(destination, source);
+    }
 
-	private static void VerifyProjectTo(object result, NonStronglyTypedSource source)
-	{
-		result
-			.Should()
-			.BeEquivalentTo(TestingCustomProjection.ItemToReturn);
+    private static void VerifyProjectByReference(object result, NonStronglyTypedSource source)
+    {
+        result.Should().BeEquivalentTo(TestingCustomProjection.ItemToReturn);
 
-		TestingCustomProjection.WasProjectToCalled
-								.Should()
-								.BeTrue();
+        TestingCustomProjection.WasProjectCalled.Should().BeTrue();
 
-		TestingCustomProjection.CalledSource
-								.Should()
-								.Be(source);
-	}
-	
-	private static void VerifyProjectByReference(object result, NonStronglyTypedSource source)
-	{
-		result
-			.Should()
-			.BeEquivalentTo(TestingCustomProjection.ItemToReturn);
+        TestingCustomProjection.CalledSource.Should().Be(source);
+    }
 
-		TestingCustomProjection.WasProjectCalled
-								.Should()
-								.BeTrue();
+    private static void VerifyProjectTo(object result, NonStronglyTypedSource source)
+    {
+        result.Should().BeEquivalentTo(TestingCustomProjection.ItemToReturn);
 
-		TestingCustomProjection.CalledSource
-								.Should()
-								.Be(source);
-	}
+        TestingCustomProjection.WasProjectToCalled.Should().BeTrue();
 
-	private class NonStronglyTypedDestination : MultiLevelObjectDestination { }
+        TestingCustomProjection.CalledSource.Should().Be(source);
+    }
 
-	private class NonStronglyTypedSource : MultiLevelObjectSource { }
+    private class NonStronglyTypedDestination : MultiLevelObjectDestination { }
 
-	private class TestingCustomProjection : IDoProjection
-	{
-		public static object CalledSource { get; private set; }
+    private class NonStronglyTypedSource : MultiLevelObjectSource { }
 
-		public static NonStronglyTypedDestination ItemToReturn { get; } = Faker.Create<NonStronglyTypedDestination>();
+    private class TestingCustomProjection : IDoProjection
+    {
+        public static object CalledSource { get; private set; }
 
-		public static bool WasProjectCalled { get; private set; }
+        public static NonStronglyTypedDestination ItemToReturn { get; } =
+            Faker.Create<NonStronglyTypedDestination>();
 
-		public static bool WasProjectToCalled { get; private set; }
+        public static bool WasProjectCalled { get; private set; }
 
-		public static void Reset()
-		{
-			WasProjectToCalled = false;
-			WasProjectCalled = false;
-			CalledSource = null;
-		}
+        public static bool WasProjectToCalled { get; private set; }
 
-		public void Project(ref object destinationObject, object source)
-		{
-			destinationObject = ItemToReturn;
+        public static void Reset()
+        {
+            WasProjectToCalled = false;
+            WasProjectCalled = false;
+            CalledSource = null;
+        }
 
-			WasProjectCalled = true;
-			CalledSource = source;
-		}
+        public void Project(ref object destinationObject, object source)
+        {
+            destinationObject = ItemToReturn;
 
-		public object ProjectToObject(object source)
-		{
-			WasProjectToCalled = true;
-			CalledSource = source;
+            WasProjectCalled = true;
+            CalledSource = source;
+        }
 
-			return ItemToReturn;
-		}
-	}
+        public object ProjectToObject(object source)
+        {
+            WasProjectToCalled = true;
+            CalledSource = source;
+
+            return ItemToReturn;
+        }
+    }
 }

@@ -5,28 +5,28 @@ namespace FatCat.Projections;
 
 internal class ListCopy
 {
-	public static IEnumerable Copy(IEnumerable sourceList)
-	{
-		var sourceType = sourceList.GetType();
+    public static IEnumerable Copy(IEnumerable sourceList)
+    {
+        var sourceType = sourceList.GetType();
 
-		var destinationType = sourceType.GetGenericArguments()[0];
+        var destinationType = sourceType.GetGenericArguments()[0];
 
-		return Copy(sourceList, destinationType);
-	}
-	
-	public static IEnumerable Copy(IEnumerable sourceList, Type destinationType)
-	{
-		var destinationList = GenericExtensions.CreateListFromType(destinationType);
+        return Copy(sourceList, destinationType);
+    }
 
-		var addMethod = destinationList?.GetType().GetMethod("Add");
+    public static IEnumerable Copy(IEnumerable sourceList, Type destinationType)
+    {
+        var destinationList = GenericExtensions.CreateListFromType(destinationType);
 
-		foreach (var item in sourceList)
-		{
-			var copyOfItem = Projection.ProjectTo(destinationType, item);
+        var addMethod = destinationList?.GetType().GetMethod("Add");
 
-			addMethod?.Invoke(destinationList, new[] { copyOfItem });
-		}
+        foreach (var item in sourceList)
+        {
+            var copyOfItem = Projection.ProjectTo(destinationType, item);
 
-		return destinationList as IEnumerable;
-	}
+            addMethod?.Invoke(destinationList, new[] { copyOfItem });
+        }
+
+        return destinationList as IEnumerable;
+    }
 }

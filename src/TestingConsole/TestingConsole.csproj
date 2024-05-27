@@ -11,17 +11,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj"/>
-        <ProjectReference Include="..\Projections\Projections.csproj"/>
+        <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj" />
+        <ProjectReference Include="..\Projections\Projections.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CSharpier.MsBuild" Version="0.27.2">
+        <PackageReference Include="CSharpier.MsBuild" Version="0.28.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="FatCat.Toolkit" Version="1.0.198"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="FatCat.Toolkit" Version="1.0.225" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>

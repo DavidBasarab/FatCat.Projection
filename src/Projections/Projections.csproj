@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <VersionPrefix>1.0.22</VersionPrefix>
+    <VersionPrefix>1.0.23</VersionPrefix>
     <Authors>David Basarab</Authors>
     <PackageTags>tools</PackageTags>
     <PackageProjectUrl>https://github.com/DavidBasarab/FatCat.Projection</PackageProjectUrl>

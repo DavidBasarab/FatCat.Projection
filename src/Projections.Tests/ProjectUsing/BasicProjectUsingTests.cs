@@ -38,7 +38,7 @@ public class BasicProjectUsingTests
         var expectedList = new List<CustomProjectionDestination>
         {
             TestingCustomProjection.ItemToReturn,
-            TestingCustomProjection.ItemToReturn
+            TestingCustomProjection.ItemToReturn,
         };
 
         result.Should().BeEquivalentTo(expectedList);

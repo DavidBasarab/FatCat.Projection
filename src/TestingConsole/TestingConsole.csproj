@@ -1,27 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
-        <OutputType>Exe</OutputType>
-        <RootNamespace>FatCat.Projections.TestingConsole</RootNamespace>
-        <AssemblyName>FatCat.Projections.TestingConsole</AssemblyName>
-        <LangVersion>default</LangVersion>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj" />
-        <ProjectReference Include="..\Projections\Projections.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="CSharpier.MsBuild" Version="0.28.2">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="FatCat.Toolkit" Version="1.0.225" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    </ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FatCat.Projections.TestingConsole</RootNamespace>
+    <AssemblyName>FatCat.Projections.TestingConsole</AssemblyName>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Projections.Tests\Projections.Tests.csproj" />
+    <ProjectReference Include="..\Projections\Projections.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CSharpier.MsBuild" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="FatCat.Toolkit" Version="1.0.252" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
 </Project>

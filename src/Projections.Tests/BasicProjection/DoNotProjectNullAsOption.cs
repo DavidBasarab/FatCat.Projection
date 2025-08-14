@@ -8,7 +8,7 @@ public class DoNotProjectNullAsOption
     [Fact]
     public void CanTurnOnOptionToNotProjectNull()
     {
-        var source = new SourceItem { FirstName = "Will be populated", };
+        var source = new SourceItem { FirstName = "Will be populated" };
 
         var destinationItem = Faker.Create<DestinationItem>();
         var projectionItem = (object)destinationItem.DeepCopy();
@@ -21,7 +21,7 @@ public class DoNotProjectNullAsOption
     [Fact]
     public void DoNotNullSubObjectOnProjection()
     {
-        var source = new SourceItem { FirstName = "Will be populated", };
+        var source = new SourceItem { FirstName = "Will be populated" };
 
         var destinationItem = Faker.Create<DestinationItem>();
         var projectionItem = (object)destinationItem.DeepCopy();
@@ -40,7 +40,7 @@ public class DoNotProjectNullAsOption
     [Fact]
     public void DoNotProjectNullUsingNonStaticProjector()
     {
-        var source = new SourceItem { FirstName = "Will be populated", };
+        var source = new SourceItem { FirstName = "Will be populated" };
 
         var destinationItem = Faker.Create<DestinationItem>();
         var projectionItem = (object)destinationItem.DeepCopy();
@@ -55,7 +55,7 @@ public class DoNotProjectNullAsOption
     [Fact]
     public void DoProjectionAsAWebRequest()
     {
-        var source = new SimulateWebRequest { FirstName = "Will be populated", };
+        var source = new SimulateWebRequest { FirstName = "Will be populated" };
 
         var destinationItem = Faker.Create<DestinationItem>();
         var projectionItem = (object)destinationItem.DeepCopy();

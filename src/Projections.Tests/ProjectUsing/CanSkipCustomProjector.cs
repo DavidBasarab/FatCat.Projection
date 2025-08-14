@@ -24,7 +24,7 @@ public class CanSkipCustomProjector
         {
             RandomNumber = source.RandomNumber,
             RandomString = source.RandomString,
-            SecondRandomString = source.SecondRandomString
+            SecondRandomString = source.SecondRandomString,
         };
 
         destination.Should().BeEquivalentTo(expectedDestination);
@@ -44,7 +44,7 @@ public class CanSkipCustomProjector
         {
             RandomNumber = source.RandomNumber,
             RandomString = source.RandomString,
-            SecondRandomString = source.SecondRandomString
+            SecondRandomString = source.SecondRandomString,
         };
 
         destination.Should().BeEquivalentTo(expectedDestination);
@@ -65,7 +65,7 @@ public class CanSkipCustomProjector
         {
             RandomNumber = source.RandomNumber,
             RandomString = source.RandomString,
-            SecondRandomString = source.SecondRandomString
+            SecondRandomString = source.SecondRandomString,
         };
 
         destination.Should().BeEquivalentTo(expectedDestination);

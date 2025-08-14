@@ -5,5 +5,5 @@ public enum TestingEnum
     None,
     First,
     Second,
-    Third
+    Third,
 }

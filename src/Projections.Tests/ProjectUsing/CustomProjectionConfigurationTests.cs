@@ -11,7 +11,7 @@ public class CustomProjectionConfigurationTests
 
         var projector = ProjectionConfiguration.GetCustomProjector(typeof(NonStronglyTypeDestination));
 
-        projector.Should().NotBeNull();
+        projector.Should().Not.BeNull();
 
         projector.Should().BeOfType<NonStronglyTypedProjection>();
     }
@@ -44,7 +44,7 @@ public class CustomProjectionConfigurationTests
     {
         var customProjector = ProjectionConfiguration.GetCustomProjector<ConfigTestDestination>();
 
-        customProjector.Should().NotBeNull();
+        customProjector.Should().Not.BeNull();
 
         customProjector.Should().BeOfType<T>();
     }

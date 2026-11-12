@@ -15,7 +15,7 @@ public class SimpleObjectProjection
 
         result.Should().BeOfType<SimpleDestination>();
 
-        result.Should().BeEquivalentTo(source);
+        result.ShouldBeEquivalentTo(source);
     }
 
     [Fact]
@@ -59,6 +59,6 @@ public class SimpleObjectProjection
 
         var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
-        result.Should().BeEquivalentTo(source);
+        result.ShouldBeEquivalentTo(source);
     }
 }

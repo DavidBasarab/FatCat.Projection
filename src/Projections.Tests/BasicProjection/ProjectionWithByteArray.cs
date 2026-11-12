@@ -11,7 +11,11 @@ public class ProjectionWithByteArray
 
         var destination = Projection.ProjectTo<DestinationClass>(source);
 
-        destination.Should().BeEquivalentTo(source, options => options.ExcludingMissingMembers());
+        destination.Email.Should().Be(source.Email);
+        destination.FirstName.Should().Be(source.FirstName);
+        destination.LastName.Should().Be(source.LastName);
+        destination.PhoneNumber.Should().Be(source.PhoneNumber);
+        destination.Username.Should().Be(source.Username);
     }
 
     public class DestinationClass

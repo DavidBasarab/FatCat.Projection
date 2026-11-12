@@ -32,7 +32,7 @@ public class ObjectWithListProjections
 
         var result = Projection.ProjectTo<DestinationItemWithList>(source);
 
-        source.Should().BeEquivalentTo(result);
+        source.ShouldBeEquivalentTo(result);
     }
 
     private static void CompareLists<T>(IEnumerable<T> sourceList, IEnumerable<T> resultList)

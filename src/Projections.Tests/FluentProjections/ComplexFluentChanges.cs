@@ -15,7 +15,7 @@ public class ComplexFluentChanges
             .ForProperty(i => i.SubObject.TheNumber, s => s.Simple.Number)
             .Project(source);
 
-        result.SubObject.Should().NotBeNull();
+        result.SubObject.Should().Not.BeNull();
 
         result.SubObject.FullTitle.Should().Be(source.Title);
 

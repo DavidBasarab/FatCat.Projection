@@ -31,7 +31,7 @@ public class ByteArrayProjection
 
         var result = Projection.ProjectTo<ArrayDestination>(source);
 
-        result.Should().BeEquivalentTo(source);
+        result.ShouldBeEquivalentTo(source);
     }
 
     [Fact]

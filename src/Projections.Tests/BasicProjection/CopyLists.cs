@@ -13,7 +13,7 @@ public class CopyLists
 
         var copyList = ListCopy.Copy(sourceList);
 
-        copyList.Should().NotBeSameAs(sourceList);
+        copyList.Should().Not.BeSameAs(sourceList);
 
         var strongList = copyList as List<SubObject>;
 
@@ -29,12 +29,12 @@ public class CopyLists
 
         var copyList = ListCopy.Copy(sourceList, typeof(DestinationItemsWithStuff));
 
-        copyList.Should().NotBeSameAs(sourceList);
+        copyList.Should().Not.BeSameAs(sourceList);
 
         var strongList = copyList as List<DestinationItemsWithStuff>;
 
         strongList.Should().BeOfType<List<DestinationItemsWithStuff>>();
 
-        strongList.Should().BeEquivalentTo(sourceList);
+        strongList.ShouldBeEquivalentTo(sourceList);
     }
 }

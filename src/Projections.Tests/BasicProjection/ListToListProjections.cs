@@ -22,6 +22,6 @@ public class ListToListProjections
 
         var resultList = Projection.ProjectTo<List<DestinationItemsWithStuff>>(sourceList);
 
-        resultList.Should().BeEquivalentTo(sourceList);
+        resultList.ShouldBeEquivalentTo(sourceList);
     }
 }

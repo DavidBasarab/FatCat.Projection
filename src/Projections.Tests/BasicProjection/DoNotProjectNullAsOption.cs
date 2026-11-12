@@ -32,7 +32,7 @@ public class DoNotProjectNullAsOption
 
         var result = (DestinationItem)projectionItem;
 
-        result.SubObject.Should().NotBeNull();
+        result.SubObject.Should().Not.BeNull();
 
         result.SubObject.Should().BeEquivalentTo(destinationItem.SubObject);
     }

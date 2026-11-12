@@ -25,7 +25,7 @@ public class ProjectionToExistingObjectWithoutSameProperty
 
         compareObject.NoOnSource.Should().Be(destination.NoOnSource);
 
-        compareObject.SubClass.Should().NotBeNull();
+        compareObject.SubClass.Should().Not.BeNull();
 
         compareObject.SubClass.Data.Should().Be(destination.SubClass.Data);
     }

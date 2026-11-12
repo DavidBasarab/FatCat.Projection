@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <VersionPrefix>1.0.23</VersionPrefix>
     <Authors>David Basarab</Authors>
@@ -24,6 +24,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="FatCat.Toolkit" Version="1.0.252" />
+    <PackageReference Include="FatCat.Toolkit" Version="1.0.354" />
   </ItemGroup>
 </Project>

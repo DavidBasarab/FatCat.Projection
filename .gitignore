@@ -351,3 +351,9 @@ MigrationBackup/
 
 
 *.idea*
+
+# Standards-review reports — generated locally by the /standards-review skill, never committed
+.reviews/
+
+# Claude Code machine-local settings
+.claude/settings.local.json

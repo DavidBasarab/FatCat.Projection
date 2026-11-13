@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Projections.Tests/Projections.Tests.csproj" />
+  <Project Path="Projections/Projections.csproj" />
+  <Project Path="TestingConsole/TestingConsole.csproj" />
+</Solution>
